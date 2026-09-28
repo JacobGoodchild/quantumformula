@@ -112,6 +112,13 @@ THE FORMULA
       diffs < 6e-52; reduction to (b) at (0.37,0.81): 3e-52; independent finite differences at (1.37,0.61,2.2,0.93):
       0.16968994077425 (formula 0.16968994078275).
       Code: code/lieb_metric/lieb4_general_fit.py, lieb_general_formula.py.
+  (h) Directional components for ALL four hoppings (generalises (d); added later on 2026-09-28):
+        Int g_xx = [ (a^2+c^2)/2 * K(k) - (a^2-c^2)^2 (a^2+b^2+c^2+d^2) / (2 S1 S2) * E(k) ] / ( pi sqrt(R1 R2) ),
+      g_yy by a<->b, c<->d; notation and k as in (g); g_xx + g_yy reproduces (g) exactly. Found by PSLQ at 203
+      rational triples (K-coefficient: unique degree-2 fit (a^2+c^2)/2; E-coefficient x S1 S2: exact degree-6
+      polynomial, zero residual on all 203 points with 84 unknowns). Checked vs 40-digit quadrature at
+      (1.37,0.61,2.2,0.93) and (0.3,1.7,1.1,2.9) (see gxx_general_formula.py output; diffs ~1e-41, x+y-total ~1e-41).
+      Code: code/lieb_metric/gxx_general_fit.py, gxx_general_formula.py.
   (c) Minimal quantum metric (minimum over all orbital positions; isotropic delta).
       M depends on where the orbitals are placed; it is exactly quadratic in the B-C relative
       position, and by the x<->y symmetry the minimum lies on the family s above. Result:
