@@ -63,3 +63,9 @@ XX/XY chain items and quantum-information items.
 - Breathing kagome (t_up=1, t_down=0.5 or 0.8): flat band at -(t_up+t_down) still touches the middle
   band -> integrated metric diverges; no gapped formula. (negative)
 - Late checks: diamond Delta=1 direct N=50 diff 2.4e-22; 3D Lieb delta=0 N=40 extrapolates to 0.37912.
+- OPEN LEAD (strained graphene Berry curvature): for t = (a,1,1) PSLQ finds <Omega^2> = c0 G(w) + c1 G'(w)
+  with NO constant term (40-digit relations, e.g. t=(3/2,1,1), Delta^2=2: 190464 v + 8516 G + 46025 G' = 0),
+  but c0, c1 are not polynomials in w (degree-5 interpolation gives ugly coefficients) except that for
+  a = 2 the G' coefficient is exactly -(w+6)^2/384. Probably rational in w with a denominator involving
+  the bond invariants (t1t2t3, sum t_i^2 t_j^2); needs a real derivation. Code:
+  code/twoband_metric/strained_omega2.py, strained_omega2_fit.py.
