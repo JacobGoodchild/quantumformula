@@ -10,6 +10,7 @@ out by Claude Code (Anthropic's AI coding agent), directed by Jacob Goodchild.
 - **[formulas.txt](formulas.txt)** — every result, with its index, set-up, exact closed
   form, derivation sketch, independent verification numbers and an honest novelty status.
 - **[NOTES.md](NOTES.md)** — working log: what was tried, negative results, open leads.
+- `code/verify_all.py` — re-checks every formula against an independent computation (~10 s).
 - `code/` — the Python scripts (numpy / scipy / mpmath / sympy) that produced and checked
   each result.
 
