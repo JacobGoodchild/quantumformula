@@ -7,6 +7,7 @@ INDEX OF RESULTS (see each entry for derivation, verification and novelty notes)
  5  3D Lieb (perovskite) flat bands: metric via SC Green fn; = Watson/4 at delta = 0 ... not found
  6  Qi-Wu-Zhang: Berry-curvature fluctuations <Omega^2> in closed form (K, E) ........ not found
  7  Gapped graphene: Berry-curvature fluctuations via triangular Green fn G, G' ....... not found
+ 8  Gapped diamond: Berry-curvature fluctuations via FCC Green fn G, G', G'' .......... not found
 ------------------------------------------------------------------------------------------
 "Not found" = my web searches found no prior statement; arXiv/journal pages were not
 directly accessible from this environment, so experts should confirm novelty.
@@ -245,6 +246,8 @@ THE FORMULA
   tau -> R tau + a_1 (R = C3 rotation about A), and M is quadratic in tau, so grad M(tau*) = 0: the value
   above is also the MINIMAL quantum metric over orbital positions. (Same argument for diamond with its
   tetrahedral symmetry, Formula 4.)
+  Numerical confirmation (check_minimal_honey.py, Delta = 1): moving the B orbital by 0.05 in six
+  different directions raises M by 3.98785e-4 in every case.
   Limits (checked numerically): Delta -> infinity: M ~ 1/(4 Delta^2) (Delta^2 M = 0.2499991 at
   Delta = 1000).  Delta -> 0: k -> 1 and M diverges logarithmically (the two Dirac cones),
   M ~ (sqrt3/(8 pi)) ln(1/Delta) + const (slope 0.0689161119 = sqrt3/(8 pi) at Delta ~ 1e-6).
@@ -577,3 +580,55 @@ NOVELTY
 
 Code: code/twoband_metric/honey_omega2.py, honey_omega2_pslq.py, honey_omega2_G.py (identification),
       honey_omega2_formula.py (tests), check_honey_omega2_proj.py (independent check).
+
+==========================================================================================
+FORMULA 8 - Berry-curvature fluctuations of the gapped DIAMOND lattice (3D): exact expression in
+            the FCC lattice Green function and its first two derivatives
+Found: 2026-09-28.  Status: 30+-digit spectrally-accurate 3D BZ quadrature; PSLQ over {1, G, G', G''}
+at s = 4,5,6,7,8,10,12 (exact rational coefficients, no constant); coefficient functions fitted and
+then confirmed at 5 HELD-OUT values s = 2, 3, 9, 15 and non-integer 2.5 (agreement 1e-22 .. 1e-32,
+limited by the quadrature) and by an independent numpy projector code (~1e-10 relative).
+Novelty: NOT FOUND in literature searched (no prior search hit even for the metric, Formula 4).
+==========================================================================================
+
+THE QUESTION (plain English)
+  The 3D analogue of Formula 7: in a diamond-structure crystal with two different atoms (zinc-blende
+  type, simplest tight-binding model) the Berry curvature is a vector field in 3D momentum space that
+  averages to zero. How large is it on average (mean square), exactly, as a function of the gap?
+
+MODEL / SET-UP
+  As in Formula 4(c): diamond lattice, cubic cell side a = 1, H = [[Delta, f],[f*, -Delta]],
+  f = sum_{j=1..4} e^{ik.delta_j}, delta_j = (+-1,+-1,+-1)/4 with an even number of minus signs,
+  physical orbital positions, lower band.  Omega_ij = Delta Im(d_i f* d_j f)/(2 (|f|^2+Delta^2)^{3/2}),
+  |Omega|^2 = Omega_xy^2 + Omega_yz^2 + Omega_zx^2, averaged over the BZ.
+  s = Delta^2;  G(s) = <1/(eps + 4 + s)>, eps = |f|^2 - 4 = 4(c1c2+c2c3+c3c1), c_i = cos(k_i/2);
+  closed form (Formula 4): G(s) = (1/(4 Delta^3)) (2 sqrt(4+s) - sqrt(16+s)) (2K(k)/pi)^2 ... more
+  precisely G = -(1/4) g_FCC(-(4+s)/4) with Joyce's form; derivatives below are d/ds.
+
+THE FORMULA
+     <|Omega|^2> = [ (s+8) G + (5s^2 + 76s + 128) G' + 2 s (s+4)(s+16) G'' ] / 1024.
+  Values: s = 4 (Delta = 2): 0.00061796260033398792810807558533...
+          s = 8 (the magic mass of Formula 4): 0.000215053551224648942995384265452...
+          s = 2: 0.0015948106516860378983...;  s = 9: 0.000177802179088358877213937101921...
+
+DERIVATION / IDENTIFICATION (sketch)
+  <|Omega|^2> by the 3D periodic trapezoid rule on the FCC primitive reciprocal cell (N = 30 and 38
+  agree to 17 (s=2) .. 30 (s=8) digits). PSLQ with {1, G, G'} fails (no small relation); with
+  {1, G, G', G''} it returns small relations with zero constant term. Coefficients at seven values of s
+  are interpolated exactly: (s+8)/1024, (5s^2+76s+128)/1024, s(s+4)(s+16)/512. (G obeys a third-order
+  ODE, so G, G', G'' are independent and the relation is unique.) Pattern parallels Formula 7
+  (honeycomb: -(s+9)/384 [G + (s+3) G'], one derivative fewer). An analytic derivation is still open.
+
+VERIFICATION
+  1. Held-out comparisons (formula vs direct quadrature, 32 digits):
+        s = 2: -5.6e-23;  s = 3: -2.8e-27;  s = 2.5: ~2e-22;  s = 9: < 1e-31;  s = 15: < 1e-31.
+  2. Independent numpy code (check_omega2_proj_diamond.py: unit vector n(k) from the physical-position
+     Hamiltonian, Omega_ij = (1/2) n.(d_i n x d_j n) by finite differences, FCC mesh 56^3):
+        s = 4: 0.00061796260028541 (formula 0.00061796260033399);  s = 2: 0.00159481065153771 (0.00159481065168604).
+
+NOVELTY
+  Searched as for Formulas 4 and 7 (diamond / zinc-blende tight binding + Berry curvature fluctuation /
+  quantum metric + lattice Green function). No closed form seen. Status: not found in literature searched.
+
+Code: code/diamond_metric/diamond_omega2.py (quadrature; logs om2_s*.log), diamond_omega2_fit.py
+      (PSLQ + interpolation), diamond_omega2_formula.py, check_omega2_proj_diamond.py.
