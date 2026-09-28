@@ -335,7 +335,7 @@ DERIVATION (sketch)
   so the divergence theorem gives <|grad eps|^2/(eps+w)^2> = L^2 (w G - 1). Collecting terms gives (a);
   the constant is (b^2 + c)/8 and the G coefficient z b^2/4 - w(c/4 + L^2/16), which vanishes at
   w = 2z(z-1)/(z-2), i.e. (b). For diamond eps = 4(c1c2 + c2c3 + c3c1), c_i = cos(k_i/2), so
-  G(w) = -(1/4) g_FCC(-w/4) with Joyce's closed form of the FCC Green function (J. Phys. A 1998),
+  G(w) = -(1/4) g_FCC(-w/4) with Joyce's closed form of the FCC Green function (as implemented in the predecessor project),
   g_FCC(t) = 3^{3/2}(3+x)^{-3/2}(2 - sqrt(1-x)) (2K(k)/pi)^2 / t, x = 3/t, analytically continued
   below the band (t < -1); substituting t = -(4+D^2)/4 simplifies to (c).
 
@@ -354,8 +354,9 @@ VERIFICATION
 NOVELTY
   Searched: diamond lattice staggered potential quantum metric integrated exact / FCC lattice Green
   function / Wannier spread analytic; plus the Formula 3 searches. Found general work on diamond and
-  FCC lattice Green functions (e.g. Guttmann, "Lattice Green's functions in all dimensions", J. Phys. A
-  2010; Joyce's FCC evaluation) and on quantum metric / Wannier spreads, but no closed form for the
+  FCC lattice Green functions (e.g. a paper titled "Lattice Green's functions in all dimensions"
+  and "Lattice Green's Function for the Diamond Lattice", Int. J. Theor. Phys.; plus Joyce's exact
+  FCC evaluation, used here as in the predecessor project) and on quantum metric / Wannier spreads, but no closed form for the
   metric of the gapped diamond model and no statement of the magic-mass rational values.
   Status: not found in literature searched.
 
