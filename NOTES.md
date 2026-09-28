@@ -1,7 +1,13 @@
 # NOTES — working log for quantumformula
 
 ## Status summary
-(Phase 1 started 2026-09-28.)
+Phase 1 (2026-09-28, ~1 h) done. 1 verified result (FORMULA 1: Lieb flat-band quantum metric).
+Plan for Phase 2: (1) push the quantum-geometry line to other flat-band lattices (dimerised
+kagome / dice / checkerboard / 3D perovskite-Lieb, Lieb with next-neighbour terms), and to
+related band-geometric quantities with rational-in-Bloch-function integrands (Wannier spreads
+of filled bands, flat-band Berry-curvature-free metrics, flat-band exciton sizes);
+(2) CTQW long-time averages on flat-band and decorated lattices; (3) impurity/vacancy
+quantities from lattice Green functions; (4) quick scans of spin-chain and quantum-info items.
 
 ## Log
 
