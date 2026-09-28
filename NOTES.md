@@ -1,18 +1,28 @@
 # NOTES — working log for quantumformula
 
 ## Status summary
-Phase 1 (2026-09-28, extended to ~1h15 at user's request): 7 verified results, all in QUANTUM
-GEOMETRY of lattice bands (quantum metric = minimal Wannier spread / "quantum weight"; Berry-curvature
-fluctuations). Formulas 1-7 in formulas.txt. Key technique: (i) inner BZ integral exact when the
-denominator is linear in one cosine; (ii) DIVERGENCE-THEOREM trick: if |grad f|^2 is affine in
-|f|^2 and Laplacian(eps) = -L^2 eps, averages of |grad eps|^2 h(eps) reduce to lattice Green
-functions -> closed forms (honeycomb, diamond, Lieb in any d).
-Plan for Phase 2: (1) push the quantum-geometry line to other flat-band lattices (dimerised
-kagome / dice / checkerboard / 3D perovskite-Lieb, Lieb with next-neighbour terms), and to
-related band-geometric quantities with rational-in-Bloch-function integrands (Wannier spreads
-of filled bands, flat-band Berry-curvature-free metrics, flat-band exciton sizes);
-(2) CTQW long-time averages on flat-band and decorated lattices; (3) impurity/vacancy
-quantities from lattice Green functions; (4) quick scans of spin-chain and quantum-info items.
+END OF PHASE 1 (2026-09-28, ~17:00-18:00 UTC; the user extended it to about 1h15).
+9 verified results, all in formulas.txt, none found in the literature searched:
+  F1 Lieb flat band quantum metric: (2K-E)/(4pi); anisotropic total and x/y components; minimal metric.
+  F2 Qi-Wu-Zhang integrated quantum metric, one formula (K, Pi) valid for all m.
+  F3 gapped graphene metric = 1/48 + (9-D^2) G_tri/48, exactly 1/48 at D = 3 (also the minimal metric).
+  F4 simplex bipartite lattices: general reduction, magic mass D*^2 = z^2/(z-2), gapped diamond (K^2).
+  F5 3D Lieb flat bands via the simple-cubic Green function; Watson/4 at zero staggering; general d.
+  F6 QWZ Berry-curvature fluctuations <Omega^2> (K, E only).
+  F7 gapped graphene <Omega^2> = -(s+9)/384 [G + (s+3)G'].
+  F8 gapped diamond <|Omega|^2> = [(s+8)G + (5s^2+76s+128)G' + 2s(s+4)(s+16)G'']/1024.
+  F9 quantum-walk trapping fraction on the anisotropic staggered Lieb lattice (K, Pi).
+Main technique: the inner BZ integral is exact when the denominator is linear in one cosine;
+divergence-theorem reduction to lattice Green functions; PSLQ over {1,K,E,Pi} or {1,G,G',G''};
+exact rational interpolation of coefficient functions; checks at held-out parameters and with
+independent finite-difference / plaquette / exact-diagonalisation codes.
+Negative results: pi-flux energy (a 3F2, no nicer closed form); square-lattice local susceptibility and
+time-integrated CTQW return probability (L-value-type constants, no closed form);
+breathing kagome flat band is NOT isolated (touches the next band), so skipped.
+Plan for Phase 2 (overnight): hand derivations of F6-F8; Haldane/Kane-Mele metric; anisotropic
+honeycomb (strained graphene) metric; minimal metrics with embedding freedom; then branch to
+CTQW long-time averages on other flat-band lattices, impurity phase shifts from Green functions,
+XX/XY chain items and quantum-information items.
 
 ## Log
 
@@ -49,3 +59,6 @@ quantities from lattice Green functions; (4) quick scans of spin-chain and quant
   * Minimal (over orbital positions) metric for gapped graphene and QWZ (embedding dependence).
   * Other directions not yet touched: CTQW long-time averages, impurity phase shifts, spin chains,
     quantum-info items (see Directions list in the mission).
+- Breathing kagome (t_up=1, t_down=0.5 or 0.8): flat band at -(t_up+t_down) still touches the middle
+  band -> integrated metric diverges; no gapped formula. (negative)
+- Late checks: diamond Delta=1 direct N=50 diff 2.4e-22; 3D Lieb delta=0 N=40 extrapolates to 0.37912.

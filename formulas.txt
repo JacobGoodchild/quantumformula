@@ -370,7 +370,7 @@ VERIFICATION
   2. Explicit (c) vs the Joyce-based form: diffs <= 2e-39 at Delta = 1, 2, 0.5, 0.1, 5 (40 digits).
   3. Direct 3D BZ average of Tr g from analytic derivatives, periodic trapezoid rule, 32 digits
      (hp_direct.py):  Delta = 1:  N = 24: diff 2.3e-11;  N = 36: diff 1.9e-16 (exponential convergence
-     onto the formula).  Delta = 2 sqrt2: N = 36 gives 0.015625000000000000000000000000001 (1/64, diff 7e-34).
+     onto the formula); N = 50: diff 2.4e-22.  Delta = 2 sqrt2: N = 36 gives 0.015625000000000000000000000000001 (1/64, diff 7e-34).
   4. Independent vectorised code (check_fd_diamond.py; unit-vector finite differences, FCC primitive
      reciprocal mesh 56^3):  D = 1: 0.050961198563718 (formula 0.050961198566209); D = 2: 0.024763850055714
      (0.024763850056532); D = 0.5: 0.085864949920787 (0.085864949929211); D = sqrt8: 0.015624999999547.
@@ -451,8 +451,8 @@ VERIFICATION
      Tr g = (1/2) sum_i Tr(dP_i dP_i) by finite differences, midpoint mesh N^3):
        delta = 0.5: N=16: 0.20152253990917, N=24: 0.20152253991048  (formula 0.20152253991623)
        delta = 0.2: N=20: 0.28473805310941                             (formula 0.28473811826832)
-       delta = 0:   N=16: 0.36156695, N=24: 0.36746458, N=32: 0.37038673 (error ~ 0.279/N);
-                    1/N-extrapolation: 0.37926 (16,24), 0.37916 (24,32) -> W/4 = 0.3790965.
+       delta = 0:   N=16: 0.36156695, N=24: 0.36746458, N=32: 0.37038673, N=40: 0.37213391 (error ~ 0.279/N);
+                    1/N-extrapolation: 0.37926 (16,24), 0.37916 (24,32), 0.37912 (32,40) -> W/4 = 0.3790965.
   2. delta -> 0 limit of the formula converges to W/4 (see above; difference 5.5e-6 at delta = 1e-5).
   3. Precision stability: M(0.5) at 40 vs 60 digits differs by 6e-42.
 
