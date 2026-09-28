@@ -174,7 +174,8 @@ THE FORMULA
   MINIMAL quantum metric (the one that controls flat-band-type superfluid weight bounds).
   Limits: m -> infinity: M -> 0.  At the gap closing m -> 2, k' = |m^2-4|/m^2 -> 0 and
   M ~ -(1/(8 pi)) ln|m - 2| (logarithmic divergence from the Dirac cone).  m -> 0: diverges
-  (two Dirac cones). Throughout the topological phase M > 1/(2 pi) = 0.159, as required.
+  (two Dirac cones). Throughout the topological phase M > 1/(2 pi) = 0.159, as required (scan of 0<m<2 in steps
+  of 0.005: minimum M = 0.188743 at m ~ 1.715).
 
 DERIVATION (sketch)
   Tr g is a rational function of cos kx, cos ky, and |d|^2 = A + B cos ky with

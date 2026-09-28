@@ -19,4 +19,13 @@ independent computation (exact diagonalisation on growing systems, simulation, o
 separately written numerical integral). Novelty labels come from web searches only and
 should be confirmed by experts.
 
+## Results so far (details and honest novelty labels in formulas.txt)
+1. Lieb-lattice flat band: exact quantum metric (2K-E)/(4pi), anisotropic and minimal versions.
+2. Qi-Wu-Zhang Chern insulator: exact integrated quantum metric for every mass m.
+3. Gapped graphene: exact quantum metric; exactly 1/48 at gap parameter Delta = 3t.
+4. General "simplex" lattices and the gapped diamond lattice; a universal "magic mass".
+5. 3D Lieb (perovskite) flat bands: metric = Watson's integral / 4 at zero staggering.
+6-8. Exact Berry-curvature fluctuations for Qi-Wu-Zhang, gapped graphene and gapped diamond.
+9. Exact fraction of a quantum walker trapped forever on the anisotropic Lieb lattice.
+
 Predecessor project: https://github.com/JacobGoodchild/findformula
