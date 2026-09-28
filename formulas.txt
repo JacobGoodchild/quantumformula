@@ -11,6 +11,7 @@ INDEX OF RESULTS (see each entry for derivation, verification and novelty notes)
  9  Quantum-walk trapping on the Lieb lattice, all four hoppings (K and Pi) ........... not found
 10  Strained honeycomb / unequal-bond diamond: metric + universal magic-mass value ...... not found
 11  Abrikosov vortex lattice: beta (all Landau levels), higher moments, shear stiffness ... not found
+12  Two-component rotating BEC: exact vortex-lattice phase boundaries 0.37322, 0.92565 ... closed forms not found
 ------------------------------------------------------------------------------------------
 "Not found" = my web searches found no prior statement; arXiv/journal pages were not
 directly accessible from this environment, so experts should confirm novelty.
@@ -924,3 +925,74 @@ NOVELTY
   are probably derivable by experts in modular forms but were not found. Status: not found.
 
 Code: code/abrikosov/beta.py, betan.py, exact_betan.py, scan.py.
+
+==========================================================================================
+FORMULA 12 - Exact phase boundaries of the vortex lattices of a rotating two-component Bose-Einstein
+             condensate (Mueller-Ho phase diagram): alpha_2 = 4 sqrt2/(P-4), alpha_3 = sqrt2 (P-4)/(P+4),
+             P = Gamma(1/4)^8/(16 pi^4)
+Found: 2026-09-28 (overnight).  Status: derived from the Hessians of lattice theta sums at the square point,
+whose coefficients were identified by PSLQ (50 digits, small integers); checked against an independent
+double-precision minimisation of the full energy (transition located to +-5e-4 on both sides, with the
+expected square-root onset) and against the published numerical values.  Novelty: closed forms NOT FOUND
+(mathematicians Luo & Wei proved the existence of the square-lattice interval; see NOVELTY).
+==========================================================================================
+
+THE QUESTION (plain English)
+  Spin a mixture of two kinds of ultracold atoms fast enough and each kind fills with a lattice of quantum
+  vortices. The two lattices interlock, and their shape depends on how strongly the two kinds repel each
+  other (ratio alpha = g_12/g). Mueller and Ho found numerically (2002) that the pattern goes triangular ->
+  rhombic -> square -> rectangular at alpha ~ 0.1724, 0.3733, 0.9256. Can the transition points be computed
+  exactly?
+
+MODEL / SET-UP
+  Lowest-Landau-level mean-field energy per particle proportional to
+     f(tau, r0) = beta(tau) + alpha * beta_12(tau, r0),
+  beta = sum_k e^{-|k|^2/2} (Abrikosov parameter), beta_12 = sum_k e^{-|k|^2/2} cos(k.r0), k over the reciprocal
+  lattice of a cell of area 2 pi l^2, tau = lattice shape, r0 = displacement of lattice 2 (at the square point
+  r0 = cell centre, i.e. the checkerboard-interlaced square lattice).
+  P = pi^2 Om^4 with Om = Gamma(1/4)^2/(2 pi^{3/2}) (so P = Gamma(1/4)^8/(16 pi^4) = 19.15720...).
+
+THE FORMULA
+  Hessians at the square point tau = i (x = Re tau, y = Im tau), all exact:
+     beta_xx = -Om/4,          beta_yy = Om (P-4)/16,
+     beta12  = Om/sqrt2,       beta12_xx = sqrt2 Om (P-4)/32,     beta12_yy = -sqrt2 Om (P+4)/32.
+  The interlaced square lattice is a local minimum exactly for alpha_2 < alpha < alpha_3 with
+     alpha_2 = -beta_xx/beta12_xx = 4 sqrt2 / (P - 4)      = 0.37321550790897782596006883914740559141856...
+     alpha_3 = -beta_yy/beta12_yy = sqrt2 (P - 4)/(P + 4)  = 0.92564969740393552904286673630086494091363...
+  (continuous transitions to the rhombic lattice below alpha_2 and to the rectangular lattice above alpha_3).
+  Cute consequence: alpha_2 alpha_3 = 8/(P + 4).
+  The remaining boundary (triangular -> rhombic) is FIRST ORDER, landing on a non-special lattice, so no closed
+  form is expected; numerically alpha_1 = 0.172356587243 (rhombus angle there: cos(theta) = -0.37541, i.e.
+  67.95 deg), matching the published 0.1724 and 67.9 deg.
+
+DERIVATION (sketch)
+  At the square point all first derivatives vanish by symmetry and the Hessian is diagonal in (x, y); moving
+  along |tau| = 1 is locally the x-direction (rhombic distortion), moving along y is the rectangular distortion.
+  The Hessian entries are second derivatives of theta series (with and without the checkerboard sign (-1)^{m+n})
+  at tau = i; they are quasi-modular and reduce to Om (a + b P) with small rationals (and sqrt2 for the signed
+  sums), as found by PSLQ: [-32, 0, -4, 0, 0, 0, +-1] over {c, Om, sqrt2 Om, pi Om^3, sqrt2 pi Om^3, pi^2 Om^5,
+  sqrt2 pi^2 Om^5}. The stability condition f_xx = 0 (resp. f_yy = 0) gives alpha_2 (resp. alpha_3).
+
+VERIFICATION
+  1. PSLQ relations at 50 digits (above); beta12(i) = Om/sqrt2 checked (difference 0 at 50 digits).
+  2. Independent numpy/scipy minimisation of f (check_transitions.py):
+       rhombic family (|tau| = 1): optimal |Re tau| = 0.03856 at alpha_2 - 0.002, 0.01929 at alpha_2 - 0.0005
+       (square-root onset: ratio 2 for a factor 4 in distance), 0.000001 and 0.000000 at alpha_2 + 0.0005, +0.002;
+       rectangular family: optimal y = 1.000000 at alpha_3 - 0.002 and - 0.0005, 0.954893 at alpha_3 + 0.0005,
+       0.911817 at alpha_3 + 0.002.
+  3. Full 4-parameter minimisation (phase.py) reproduces the whole Mueller-Ho sequence: triangular (r0 at the
+     centroid) at alpha = 0.05-0.17, rhombic 0.18-0.37, square 0.38-0.92, rectangular 0.93-0.95.
+  4. Published values: Mueller & Ho (PRL 88, 180403 (2002)) and follow-ups quote 0.1724, 0.3733, 0.9256.
+
+NOVELTY
+  Searched: two-component BEC vortex lattice phase diagram with the numbers 0.1724/0.3733/0.9256, and the
+  Mueller-Ho conjecture. Found: Mueller & Ho (2002); Tkachenko modes and structural transitions of the
+  two-component vortex lattice (cond-mat/0511512), which quotes the numbers; Luo & Wei, "On minima of sum of
+  theta functions and application to Mueller-Ho conjecture", Arch. Ration. Mech. Anal. 243, 139-199 (2022),
+  arXiv:2004.13882, which PROVES that there is a closed interval of the coupling with square optimal lattices
+  (their parametrisation differs). They may state the interval endpoints as ratios of theta-function
+  derivatives, which would be equivalent to the Hessian conditions used here; the Gamma-function closed forms
+  were not seen in search snippets (full text not accessible). Status: closed forms not found; the stability
+  criterion itself is probably known to Luo & Wei.
+
+Code: code/twocomp/phase.py, exact_transitions.py, check_transitions.py.
