@@ -19,6 +19,9 @@ show("F1(b) Lieb metric, (0.37,0.81)",f1,Ig(d1,d2))
 from gxx_formula import gxx
 from aniso3 import parts
 show("F1(d) Lieb g_xx, (0.37,0.81)",gxx(d1,d2),parts(d1,d2)[0])
+from lieb_general_formula import Mgen
+from lieb4 import M4
+show("F1(g) general Lieb metric, (1.37,0.61,2.2,0.93)",Mgen('1.37','0.61','2.2','0.93'),M4(*[mp.mpf(x) for x in ('1.37','0.61','2.2','0.93')]))
 # F2 QWZ metric
 from qwz_formula import Mformula
 from qwz_fast import M as Mq

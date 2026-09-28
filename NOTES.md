@@ -3,7 +3,8 @@
 ## Status summary
 END OF PHASE 1 (2026-09-28, ~17:00-18:00 UTC; the user extended it to about 1h15).
 10 verified results, all in formulas.txt, none found in the literature searched:
-  F1 Lieb flat band quantum metric: (2K-E)/(4pi); anisotropic total and x/y components; minimal metric.
+  F1 Lieb flat band quantum metric: (2K-E)/(4pi); x/y components; minimal metric; and (g) a closed form
+     for ALL FOUR hoppings (resolves the four-hopping lead below).
   F2 Qi-Wu-Zhang integrated quantum metric, one formula (K, Pi) valid for all m.
   F3 gapped graphene metric = 1/48 + (9-D^2) G_tri/48, exactly 1/48 at D = 3 (also the minimal metric).
   F4 simplex bipartite lattices: general reduction, magic mass D*^2 = z^2/(z-2), gapped diamond (K^2).

@@ -21,7 +21,7 @@ separately written numerical integral). Novelty labels come from web searches on
 should be confirmed by experts.
 
 ## Results so far (details and honest novelty labels in formulas.txt)
-1. Lieb-lattice flat band: exact quantum metric (2K-E)/(4pi), anisotropic and minimal versions.
+1. Lieb-lattice flat band: exact quantum metric for arbitrary bond strengths; minimal version.
 2. Qi-Wu-Zhang Chern insulator: exact integrated quantum metric for every mass m.
 3. Gapped graphene: exact quantum metric; exactly 1/48 at gap parameter Delta = 3t.
 4. General "simplex" lattices and the gapped diamond lattice; a universal "magic mass".

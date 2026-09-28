@@ -1,6 +1,6 @@
 INDEX OF RESULTS (see each entry for derivation, verification and novelty notes)
 ------------------------------------------------------------------------------------------
- 1  Lieb-lattice flat band: exact integrated + minimal quantum metric (2K-E)/(4pi) ...... not found
+ 1  Lieb-lattice flat band: exact quantum metric for ALL four hoppings; minimal metric . not found
  2  Qi-Wu-Zhang Chern insulator: exact integrated quantum metric, all m (K and Pi) ...... not found
  3  Gapped graphene (hBN-type): exact integrated quantum metric; = 1/48 at Delta = 3t ... not found
  4  Simplex bipartite lattices: general reduction, magic mass; gapped DIAMOND closed form  not found
@@ -100,6 +100,18 @@ THE FORMULA
       2.71828), (0.3,0.8), (5,0.2): diffs < 7e-52; independent finite differences at (1.7,0.45):
       0.22773377257857 (formula 0.22773377260050).
       Code: code/lieb_metric/lieb4_two.py, lieb4_two_fit.py, lieb_two_formula.py.
+  (g) FULLY GENERAL staggered Lieb lattice (added later on 2026-09-28): x-bond hoppings a (intra-cell) and
+      c (inter-cell), y-bond hoppings b (intra) and d (inter), s = 1/2. With
+        S1 = (a-c)^2+(b-d)^2,  S2 = (a+c)^2+(b+d)^2,  R1 = (a+c)^2+(b-d)^2,  R2 = (a-c)^2+(b+d)^2:
+        M = (a^2+b^2+c^2+d^2) / (2 pi sqrt(R1 R2)) * [ K(k) - ((a^2-c^2)^2 + (b^2-d^2)^2)/(S1 S2) * E(k) ],
+        k^2 = 16 a b c d / (R1 R2).
+      This single formula contains (a), (b) [a,c = 1 +- dx, b,d = 1 +- dy: the E-coefficient becomes exactly 1/2
+      and k^2 = k_x k_y], (e) and (f). Found by PSLQ at 253 rational (a,c,b; d = 1) triples: the K-coefficient
+      (a^2+b^2+c^2+1)/(4ac) is the unique degree-2 rational fit; the E-coefficient, guessed from (f), holds exactly
+      at all 253 points. Checks: vs 50-digit quadrature at (1.37,0.61,2.2,0.93), (0.3,1.7,1.1,2.9), (3.3,0.2,0.5,0.45):
+      diffs < 6e-52; reduction to (b) at (0.37,0.81): 3e-52; independent finite differences at (1.37,0.61,2.2,0.93):
+      0.16968994077425 (formula 0.16968994078275).
+      Code: code/lieb_metric/lieb4_general_fit.py, lieb_general_formula.py.
   (c) Minimal quantum metric (minimum over all orbital positions; isotropic delta).
       M depends on where the orbitals are placed; it is exactly quadratic in the B-C relative
       position, and by the x<->y symmetry the minimum lies on the family s above. Result:
