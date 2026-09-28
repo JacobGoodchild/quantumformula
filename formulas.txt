@@ -10,6 +10,7 @@ INDEX OF RESULTS (see each entry for derivation, verification and novelty notes)
  8  Gapped diamond: Berry-curvature fluctuations via FCC Green fn G, G', G'' .......... not found
  9  Quantum-walk trapping on the Lieb lattice, all four hoppings (K and Pi) ........... not found
 10  Strained honeycomb / unequal-bond diamond: metric + universal magic-mass value ...... not found
+11  Abrikosov vortex-lattice beta in all Landau levels, closed forms (square, triangular)  closed forms not found
 ------------------------------------------------------------------------------------------
 "Not found" = my web searches found no prior statement; arXiv/journal pages were not
 directly accessible from this environment, so experts should confirm novelty.
@@ -822,3 +823,71 @@ NOVELTY
   was not seen. Status: not found in literature searched.
 
 Code: code/twoband_metric/strained.py, strained_hp.py; code/diamond_metric/check_aniso_diamond.py.
+
+==========================================================================================
+FORMULA 11 - Abrikosov vortex-lattice parameters beta_A in ALL Landau levels, in closed form, for the
+             square and triangular lattices (Gamma(1/4), Gamma(1/3) and pi only)
+Found: 2026-09-28 (overnight run).  Status: identities for the lattice-theta moments S_j found by PSLQ
+at 80 digits (all coefficients small rationals, j = 0..8), assembled into beta_n, and checked against
+direct 80-digit lattice sums (agreement 1e-77..1e-81); S_2 also checked against numerical derivatives
+of Jacobi theta_3.  Novelty: closed forms NOT FOUND in literature searched; the NUMBERS (e.g. 1.1596)
+are classic and the square-lattice LLL value is probably known in closed form.
+==========================================================================================
+
+THE QUESTION (plain English)
+  In a type-II superconductor near its upper critical field (and in a rapidly rotating Bose gas) the
+  vortices form a lattice. Which lattice wins is decided by one number per lattice, the Abrikosov
+  parameter beta = <|psi|^4>/<|psi|^2>^2 (smaller is better); the famous value 1.1596 makes the
+  triangular lattice win. If the condensate lives in a HIGHER Landau level (FFLO superconductors,
+  rotating gases, some cold-atom setups) the same number with Laguerre-polynomial form factors decides.
+  Are there exact closed forms?
+
+MODEL / SET-UP
+  beta_n(tau) = sum_{k in Lambda*} exp(-|k|^2 l^2/2) [L_n(|k|^2 l^2/2)]^2 (unit cell area 2 pi l^2), i.e.
+  with x = pi |a - b tau|^2 / Im tau:  beta_n = sum_{a,b} e^{-x} L_n(x)^2.  S_j = sum e^{-x} x^j.
+  Square lattice tau = i; triangular tau = e^{i pi/3}.
+
+THE FORMULA
+  beta_0 (LLL):  square      Om_s = Gamma(1/4)^2 / (2 pi^{3/2})             = 1.18034059901609622604533794056
+                 triangular  Om_t = 3 Gamma(1/3)^3 / (2^{7/3} pi^2)          = 1.15959526696392836576999205157
+  With P = pi^2 Om^4 (Om = beta_0 of that lattice):
+   square:      S1/S0 = 1/2,  S2/S0 = 1/2 + P/16,  S3/S0 = 3/4 + 9P/32,  S4/S0 = 3/2 + 9P/8 + P^2/256, ...
+   triangular:  S1/S0 = 1/2,  S2/S0 = 1/2 + 2P/27, S3/S0 = 3/4 + P/3,   S4/S0 = 3/2 + 4P/3, ...
+  (full list j <= 8 in the code output). Hence, exactly:
+   square:     beta_1 = Om (1/2 + P/16)                                  = 2.00341214959622239708147461145
+               beta_2 = Om (3/8 + P/32 + P^2/1024)                        = 1.57227326826943146111068726830
+               beta_3 = Om (5/16 + 3P/128 + P^2/2048 + P^3/16384)         = 1.61682900219276345587657435111
+               beta_4 = Om (35/128 + 5P/256 + 3P^2/8192 + P^3/32768 + 289 P^4/37748736) = 2.39334941061985030671...
+   triangular: beta_1 = Om (1/2 + 2P/27)                                 = 2.11264230030844512811896939236
+               beta_2 = Om (3/8 + P/27)                                   = 1.20127055852471360978073370262
+               beta_3 = Om (5/16 + P/36 + 4P^3/19683)                     = 2.27640919568874764883454437393
+               beta_4 = Om (35/128 + 5P/216 + 2P^3/19683 + 2P^4/531441)   = 1.90827160487120449315...
+  Structure: S1/S0 = 1/2 for any self-dual lattice (from theta(t) = theta(1/t)/t); the triangular
+  polynomials have no P^2 term, reflecting E_4(e^{i pi/3}) = 0 (quasi-modular derivatives at CM points).
+  Side result (numerical): for n = 1 neither lattice is optimal; the minimum over lattice shapes is a
+  rectangle with aspect ratio ~2.6, beta_1 ~ 1.3178 (grid scan; consistent with the literature statement
+  that higher-Landau-level lattices become stripe-like).
+
+DERIVATION (sketch)
+  Theta(t) = sum e^{-t x} = theta_3(e^{-pi t})^2 (square) is a weight-1 modular form in disguise; its t-
+  derivatives at the self-dual point t = 1 are quasi-modular (E_2, E_4, E_6 at tau = i or e^{i pi/3}) and
+  reduce, via E_2(i) = 3/pi, E = K/2 + pi/(4K) at k^2 = 1/2 (Legendre), and Chowla-Selberg, to polynomials
+  in P = pi^2 Om^4. Explicitly for the square lattice Theta = 2K/pi with t = K'/K, which gives
+  S_2 = Om(1/2 + P/16) by two applications of d/dt = (dk/dt) d/dk.
+
+VERIFICATION
+  1. Om closed forms vs lattice sums: diffs 3e-51 (square), 8e-51 (triangular) at 50 digits.
+  2. PSLQ for S_j/S_0 at 80 digits returns small-rational relations for all j <= 8 on both lattices
+     (e.g. [16,-8,0,-1] for square S_2), stable from 50 to 80 digits.
+  3. beta_n assembled from these vs direct 80-digit sums of e^{-x} L_n(x)^2: diffs 1e-77 .. 1e-81.
+  4. S_0, S_1, S_2 for the square lattice vs jtheta-based Theta(t) and its numerical derivatives: 1e-50.
+
+NOVELTY
+  Searched: Abrikosov parameter closed form Gamma(1/3); higher Landau level vortex lattice beta. Found many
+  papers quoting 1.1596 numerically, and work on higher-Landau-level vortex lattices (FFLO: "Vortex
+  lattice structure of Fulde-Ferrell-Larkin-Ovchinnikov superconductors", cond-mat/0404580; ultracold atoms
+  in non-Abelian gauge potentials, arXiv:1203.3308) with numerical beta values. No closed forms seen.
+  The square LLL value Gamma(1/4)^2/(2 pi^{3/2}) = theta_3(e^{-pi})^2 is classical in disguise; the others
+  are probably derivable by experts in modular forms but were not found. Status: not found.
+
+Code: code/abrikosov/beta.py, betan.py, exact_betan.py, scan.py.

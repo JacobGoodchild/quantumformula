@@ -90,3 +90,9 @@ Planned topics (tick as done):
  D. QED-type: Uehling / vacuum-polarisation expectation values in exotic potentials; closed forms.
  E. Spectral zeta sums for roots of transcendental equations (Dirac/MIT-bag boxes, delta shells).
  F. Anything surprising found along the way.
+
+- A (polarizability in a sphere): exact alpha = (3+4 pi^2)/(12 pi^4) m e^2 R^4/hbar^2 derived (Dalgarno-Lewis
+  solution elementary: Phi = -r cos(pi r)/(2pi) - j1(pi r)/2) and checked by sum over states (27 digits),
+  BUT it is KNOWN (sphere polarizability treated exactly in arXiv:2010.11809 and Dalgarno-Lewis confined-system
+  papers). Not recorded. Code: code/polarizability/.
+- F11 Abrikosov beta_n closed forms (see formulas.txt).
