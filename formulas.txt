@@ -5,6 +5,7 @@ INDEX OF RESULTS (see each entry for derivation, verification and novelty notes)
  3  Gapped graphene (hBN-type): exact integrated quantum metric; = 1/48 at Delta = 3t ... not found
  4  Simplex bipartite lattices: general reduction, magic mass; gapped DIAMOND closed form  not found
  5  3D Lieb (perovskite) flat bands: metric via SC Green fn; = Watson/4 at delta = 0 ... not found
+ 6  Qi-Wu-Zhang: Berry-curvature fluctuations <Omega^2> in closed form (K, E) ........ not found
 ------------------------------------------------------------------------------------------
 "Not found" = my web searches found no prior statement; arXiv/journal pages were not
 directly accessible from this environment, so experts should confirm novelty.
@@ -441,3 +442,68 @@ NOVELTY
 
 Code: code/lieb3d_metric/lieb3d.py (formula, Watson constant, limits), check_fd_lieb3d.py
       (independent check; logs fd_delta0.log, fd_delta02.log).
+
+==========================================================================================
+FORMULA 6 - Berry-curvature fluctuations of the Qi-Wu-Zhang Chern insulator: <Omega^2> in closed
+            form (complete elliptic K and E only), for every mass m
+Found: 2026-09-28.  Status: inner BZ integral exact (symbolic), PSLQ at 70 digits for m = 3..24,
+coefficient functions obtained by exact rational interpolation (all 22 points reproduced), then
+the formula tested at 9 unseen values in both phases (agreement ~1e-51), against slow direct 2D
+quadrature at m = 1, and against an independent plaquette (Fukui-Hatsugai) computation (1e-8..1e-10).
+Novelty: NOT FOUND in literature searched.
+==========================================================================================
+
+THE QUESTION (plain English)
+  In a Chern insulator the "Berry curvature" Omega(k) acts like a magnetic field living in
+  momentum space; its total is fixed by topology (the Chern number), but it can be spread evenly
+  or bunched up. How uneven it is - its mean square - is the standard diagnostic of whether a band
+  can host fractional quantum Hall-like states (fractional Chern insulators need it nearly uniform).
+  For the simplest lattice Chern insulator (Qi-Wu-Zhang), what is <Omega^2> exactly?
+
+MODEL / SET-UP
+  H(k) = sin kx sigma_x + sin ky sigma_y + (m + cos kx + cos ky) sigma_z, lower band; lattice const 1.
+  Omega(k) = d.(d_x d x d_y d)/(2|d|^3) (so that Int Omega d^2k = 2 pi C).
+  <Omega^2> = (1/(2pi)^2) Int_BZ Omega^2 d^2k.  For any two-band model det g = Omega^2/4, so this is
+  also 4 <det g>.  K, E: complete elliptic integrals with PARAMETER k^2.
+
+THE FORMULA
+     <Omega^2> = (1/pi) [ (m^4 - 2m^2 - 4) / (32 m^2 (m^2-2)) * K(k)
+                          - (m^6 - 6m^4 - 4m^2 + 16) / (32 (m^2-4)^2 (m^2-2)) * E(k) ],
+     k^2 = 8(m^2 - 2)/m^4    (same modulus as Formula 2; valid for all real m != 0, +-2; at m^2 = 2
+                             the two terms combine to a finite limit).
+  Values:
+     m = 1:  <Omega^2> = (5 K + 7 E)/(96 pi), k^2 = 8/9, = 0.06777120989668022179267735654237369684316
+     m = 3:  (59/2016) K/pi - (223/5600) E/pi, k^2 = 56/81, = 0.00341262638757655770574008592917
+     m = 1/2: 0.1170393103169380607691435...    m = 3/2: 0.1104084733895183185827042...
+  In the topological phase <Omega> = 1/(2 pi), so the variance is <Omega^2> - 1/(4 pi^2)
+  (e.g. m = 1: 0.0677712 - 0.0253303 = 0.0424409).
+
+DERIVATION (sketch)
+  Omega^2 = (d.(d_x d x d_y d))^2/(4|d|^6) is rational in cos kx, cos ky, and |d|^2 = A + B cos ky is
+  linear in cos ky (A = 2 + m^2 + 2m cos kx, B = 2(m + cos kx)); so the ky-average is exact
+  (<u^-n> from derivatives of (A^2-B^2)^{-1/2}). The remaining kx-integral has the same four branch
+  points as in Formula 2, hence modulus k^2 = 8(m^2-2)/m^4. Unlike the metric, no third-kind integral
+  and no constant appear (PSLQ with basis {1, K, E, Pi} returns zero coefficients for 1 and Pi).
+  Coefficients a(m), b(m) found at m = 3..24 and interpolated as exact rational functions.
+
+VERIFICATION
+  1. PSLQ at 70 digits for m = 3,...,24: rational coefficients; interpolants from a subset reproduce
+     all 22 exactly.  Earlier PSLQ at 60 digits for m = 5/2, 3/2, 1/2, 8 also match the formula
+     (e.g. m = 3/2: -55/288 K/pi + 767/1568 E/pi).
+  2. Formula minus 50-digit quadrature at unseen m: 2.5: 0; 1.5: -2e-52; 0.5: 2e-52; 0.9: -2e-52;
+     1.3: -2e-52; 0.2: 0; -0.7: -3e-52; -3.3: 2e-53; 1.41: -6e-51.
+  3. m = 1 (fast code singular there): slow direct 2D quadrature 0.0677712098966802 = formula.
+  4. Independent plaquette method (check_omega2_plaquette.py: gauge-invariant Berry phases of
+     numerically obtained eigenvectors, N = 200, 400, Richardson-extrapolated):
+       m = 1: 0.0677712095591 (formula 0.0677712098967);  m = 0.5: 0.1170393007751 (0.1170393103169);
+       m = 3: 0.0034126260511 (0.0034126263876).  (Total flux gives C = -1 at m = 0.5.)
+
+NOVELTY
+  Searched: Berry curvature fluctuations Qi-Wu-Zhang exact analytic, Berry curvature squared BZ average
+  elliptic. Found work on Berry-curvature distributions in QWZ (e.g. "Topological transitions as
+  percolation of Berry curvature", arXiv:2407.21098 / J. Phys.: Condens. Matter) and on trace
+  conditions, but no closed form of <Omega^2>. Status: not found in literature searched.
+
+Code: code/twoband_metric/qwz_omega2.py (exact inner integral), qwz_omega2_fit.py,
+      qwz_omega2_interp.py (identification), qwz_omega2_formula.py (tests),
+      check_omega2_plaquette.py (independent check).
