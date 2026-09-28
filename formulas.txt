@@ -602,8 +602,9 @@ MODEL / SET-UP
   physical orbital positions, lower band.  Omega_ij = Delta Im(d_i f* d_j f)/(2 (|f|^2+Delta^2)^{3/2}),
   |Omega|^2 = Omega_xy^2 + Omega_yz^2 + Omega_zx^2, averaged over the BZ.
   s = Delta^2;  G(s) = <1/(eps + 4 + s)>, eps = |f|^2 - 4 = 4(c1c2+c2c3+c3c1), c_i = cos(k_i/2);
-  closed form (Formula 4): G(s) = (1/(4 Delta^3)) (2 sqrt(4+s) - sqrt(16+s)) (2K(k)/pi)^2 ... more
-  precisely G = -(1/4) g_FCC(-(4+s)/4) with Joyce's form; derivatives below are d/ds.
+  closed form (from Formula 4, checked numerically to 25 digits at s = 2, 5):
+     G(s) = (2 sqrt(4+s) - sqrt(16+s)) (2K(k)/pi)^2 / Delta^3,
+     k^2 = 1/2 - [ (8+s) sqrt(16+s) - 16 sqrt(4+s) ] / (2 Delta^3);   derivatives below are d/ds.
 
 THE FORMULA
      <|Omega|^2> = [ (s+8) G + (5s^2 + 76s + 128) G' + 2 s (s+4)(s+16) G'' ] / 1024.
