@@ -3,6 +3,7 @@ INDEX OF RESULTS (see each entry for derivation, verification and novelty notes)
  1  Lieb-lattice flat band: exact integrated + minimal quantum metric (2K-E)/(4pi) ...... not found
  2  Qi-Wu-Zhang Chern insulator: exact integrated quantum metric, all m (K and Pi) ...... not found
  3  Gapped graphene (hBN-type): exact integrated quantum metric; = 1/48 at Delta = 3t ... not found
+ 4  Simplex bipartite lattices: general reduction, magic mass; gapped DIAMOND closed form  not found
 ------------------------------------------------------------------------------------------
 "Not found" = my web searches found no prior statement; arXiv/journal pages were not
 directly accessible from this environment, so experts should confirm novelty.
@@ -279,3 +280,84 @@ NOVELTY
 
 Code: code/twoband_metric/honey.py (integrand), honey_trap.py (spectral BZ quadrature),
       honey_formula.py (closed form + comparison), check_fd_honey.py (independent check).
+
+==========================================================================================
+FORMULA 4 - Quantum metric of gapped "simplex" bipartite lattices: a general exact reduction,
+            a universal "magic mass" where the answer is rational, and the DIAMOND lattice
+            in closed form (elliptic K squared)
+Found: 2026-09-28.  Status: DERIVED analytically (generalising Formula 3); the diamond closed form
+uses Joyce's FCC Green function, whose continuation below the band was checked (25 digits).
+Verified against a direct 30-digit 3D Brillouin-zone quadrature (exponentially convergent: N=24
+diff 2e-11, N=36 diff 2e-16 at Delta=1; 33 digits at the magic mass) and an independent
+vectorised finite-difference code (~1e-12).  Novelty: NOT FOUND in literature searched.
+==========================================================================================
+
+THE QUESTION (plain English)
+  Formula 3 found that the minimal spread of electron orbitals in gapped graphene becomes a
+  simple fraction at one special value of the gap. Is that an accident of graphene? No: the same
+  happens for every crystal of the same "shape" (each atom bonded to neighbours that sit at the
+  corners of a regular triangle, tetrahedron, ...), in any dimension. The 3D example is the
+  diamond lattice (diamond, silicon; with unequal atoms: zinc-blende semiconductors such as
+  GaAs, in the simplest tight-binding picture).
+
+MODEL / SET-UP
+  Bipartite lattice, each A site bonded to z B sites along vectors delta_1..delta_z that form a
+  regular simplex: |delta_j| = b, sum delta_j = 0 (so delta_j.delta_l = -b^2/(z-1), j != l), and
+  the differences delta_j - delta_l all have length L, L^2 = 2 b^2 z/(z-1).
+  (Honeycomb: z = 3; diamond: z = 4; the d-dimensional "hyperdiamond": z = d+1.)
+  H(k) = [[Delta, f],[f*, -Delta]], f = sum_j e^{i k.delta_j} (hopping 1, physical positions).
+  M = BZ average of Tr g of the lower band (sum over all d Cartesian directions).
+  eps(k) = |f|^2 - z = sum_{j != l} e^{ik(delta_j - delta_l)} is the dispersion of the
+  (second-neighbour) Bravais lattice; G(w) = <1/(eps + w)>, w = z + Delta^2.
+
+THE FORMULA
+  (a) General reduction:
+        M = b^2 (z-2) / (8 (z-1))  +  b^2 [ z/4 - w (z-2)/(8(z-1)) ] G(z + Delta^2).
+  (b) Magic mass: the Green-function term vanishes at
+        Delta*^2 = z^2/(z-2),   where   M = b^2 (z-2)/(8(z-1))   exactly.
+      Honeycomb: Delta* = 3, M = b^2/16 (= 1/48 in units of the Bravais constant; Formula 3).
+      Diamond:   Delta* = 2 sqrt2, M = b^2/12 (= 1/64 in units of the cubic cell side a).
+  (c) Diamond lattice, cubic cell side a = 1 (b^2 = 3/16), any Delta > 0:
+        M(Delta) = 1/64 + (8 - Delta^2) (2 sqrt(4+Delta^2) - sqrt(16+Delta^2)) K(k)^2 / (16 pi^2 Delta^3),
+        k^2 = 1/2 - [ (8+Delta^2) sqrt(16+Delta^2) - 16 sqrt(4+Delta^2) ] / (2 Delta^3)
+      (k^2 is negative; K(k) with negative parameter is real, K(-m) = K(m/(1+m))/sqrt(1+m)).
+      Values: Delta = 1:   M = 0.05096119856620922135431930085948489759852
+              Delta = 2:   M = 0.02476385005653150256591406204766518706627
+              Delta = 1/2: M = 0.08586494992921068599326746276626410764527
+              Delta = 2 sqrt2: M = 1/64 exactly.
+      Limits (numerical): Delta -> infinity: M ~ 3/(16 Delta^2); Delta -> 0: M ~ (3/(32 pi^2)) ln^2(1/Delta)
+      (squared logarithm = the nodal LINES of the massless diamond model; cf. single log for the
+      Dirac POINTS of graphene).
+
+DERIVATION (sketch)
+  As in Formula 3: Tr g = (1/4)[|grad f|^2/(|f|^2+D^2) - |grad|f|^2|^2/(4(|f|^2+D^2)^2)].
+  For a simplex star, |grad f|^2 = z b^2 + c eps with c = -b^2/(z-1), and Laplacian(eps) = -L^2 eps,
+  so the divergence theorem gives <|grad eps|^2/(eps+w)^2> = L^2 (w G - 1). Collecting terms gives (a);
+  the constant is (b^2 + c)/8 and the G coefficient z b^2/4 - w(c/4 + L^2/16), which vanishes at
+  w = 2z(z-1)/(z-2), i.e. (b). For diamond eps = 4(c1c2 + c2c3 + c3c1), c_i = cos(k_i/2), so
+  G(w) = -(1/4) g_FCC(-w/4) with Joyce's closed form of the FCC Green function (J. Phys. A 1998),
+  g_FCC(t) = 3^{3/2}(3+x)^{-3/2}(2 - sqrt(1-x)) (2K(k)/pi)^2 / t, x = 3/t, analytically continued
+  below the band (t < -1); substituting t = -(4+D^2)/4 simplifies to (c).
+
+VERIFICATION
+  1. Joyce continuation below the band vs direct 2D quadrature of the FCC Green function (25 digits):
+     t = -1.5: diff 6e-26; t = -3: diff -6e-27.
+  2. Explicit (c) vs the Joyce-based form: diffs <= 2e-39 at Delta = 1, 2, 0.5, 0.1, 5 (40 digits).
+  3. Direct 3D BZ average of Tr g from analytic derivatives, periodic trapezoid rule, 32 digits
+     (hp_direct.py):  Delta = 1:  N = 24: diff 2.3e-11;  N = 36: diff 1.9e-16 (exponential convergence
+     onto the formula).  Delta = 2 sqrt2: N = 36 gives 0.015625000000000000000000000000001 (1/64, diff 7e-34).
+  4. Independent vectorised code (check_fd_diamond.py; unit-vector finite differences, FCC primitive
+     reciprocal mesh 56^3):  D = 1: 0.050961198563718 (formula 0.050961198566209); D = 2: 0.024763850055714
+     (0.024763850056532); D = 0.5: 0.085864949920787 (0.085864949929211); D = sqrt8: 0.015624999999547.
+  5. (a) reproduces Formula 3 exactly for z = 3, b^2 = 1/3.
+
+NOVELTY
+  Searched: diamond lattice staggered potential quantum metric integrated exact / FCC lattice Green
+  function / Wannier spread analytic; plus the Formula 3 searches. Found general work on diamond and
+  FCC lattice Green functions (e.g. Guttmann, "Lattice Green's functions in all dimensions", J. Phys. A
+  2010; Joyce's FCC evaluation) and on quantum metric / Wannier spreads, but no closed form for the
+  metric of the gapped diamond model and no statement of the magic-mass rational values.
+  Status: not found in literature searched.
+
+Code: code/diamond_metric/diamond.py (Joyce form + check), diamond_explicit.py (closed form, limits),
+      hp_direct.py (32-digit direct 3D quadrature; logs hp_direct_*.log), check_fd_diamond.py.
