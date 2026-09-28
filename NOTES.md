@@ -79,3 +79,14 @@ XX/XY chain items and quantum-information items.
   multivariate rational fitting (null-space method); key simplification: everything is expressed through
   S1,2 = (a-+c)^2+(b-+d)^2 and R1,2 = (a+-c)^2+(b-+d)^2, modulus k^2 = 16abcd/(R1R2).
 - code/verify_all.py re-checks every formula in ~10 s (all pass as of 18:10 UTC).
+
+## OVERNIGHT RUN (2026-09-28 18:25 UTC -> 2026-09-29 06:50 UTC)
+User: move away from lattices/graphene/quantum walks. Topics: non-relativistic QM, QFT, QED,
+superconductors, more. Avoid heavily attacked areas; try new methods.
+Planned topics (tick as done):
+ A. Exact static polarizabilities of confined particles (Dalgarno-Lewis): sphere, disc, shell...
+ B. Casimir / vacuum energy and spectral determinants of equilateral quantum graphs (zeta regularisation).
+ C. BCS / Eliashberg-type universal ratios for unusual gap structures or densities of states.
+ D. QED-type: Uehling / vacuum-polarisation expectation values in exotic potentials; closed forms.
+ E. Spectral zeta sums for roots of transcendental equations (Dirac/MIT-bag boxes, delta shells).
+ F. Anything surprising found along the way.
