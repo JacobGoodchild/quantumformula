@@ -2,6 +2,7 @@ INDEX OF RESULTS (see each entry for derivation, verification and novelty notes)
 ------------------------------------------------------------------------------------------
  1  Lieb-lattice flat band: exact integrated + minimal quantum metric (2K-E)/(4pi) ...... not found
  2  Qi-Wu-Zhang Chern insulator: exact integrated quantum metric, all m (K and Pi) ...... not found
+ 3  Gapped graphene (hBN-type): exact integrated quantum metric; = 1/48 at Delta = 3t ... not found
 ------------------------------------------------------------------------------------------
 "Not found" = my web searches found no prior statement; arXiv/journal pages were not
 directly accessible from this environment, so experts should confirm novelty.
@@ -136,7 +137,7 @@ MODEL / SET-UP
   (mpmath: ellipk(k2), ellippi(n, k2)); Pi(n,k) = Int_0^{pi/2} dt/((1-n sin^2 t) sqrt(1-k^2 sin^2 t)).
 
 THE FORMULA
-  For every real m != 0, +-1, +-2:
+  For every real m != 0, 1, +-2 (m = -1 is fine):
 
     M(m) = 1/8 - (m^2 - 4m + 2)/(4 m^2 (m-1)) * K(k)/pi - (m-2)^2/(4 m (m-1)) * Pi(n,k)/pi,
 
@@ -194,3 +195,87 @@ NOVELTY
 Code: code/twoband_metric/qwz.py (slow direct 2D), qwz_fast.py (exact inner integral),
       qwz_pslq.py, qwz_fit.py, qwz_fit2.py (identification), qwz_formula.py (final formula +
       comparison), check_fd.py (independent finite-difference check).
+
+==========================================================================================
+FORMULA 3 - Exact integrated quantum metric (Wannier spread) of gapped graphene / hBN-type
+            honeycomb insulator, for any sublattice mass Delta; exactly 1/48 at Delta = 3t
+Found: 2026-09-28.  Status: DERIVED analytically (divergence-theorem reduction to the
+triangular-lattice Green function + standard elliptic reduction), then verified against
+60-digit spectrally-accurate BZ quadrature (agreement 1e-54 to 1e-62) and an independent
+finite-difference code (~1e-11).  Novelty: NOT FOUND in literature searched.
+==========================================================================================
+
+THE QUESTION (plain English)
+  Graphene is a honeycomb sheet of carbon atoms; its electrons behave like massless particles.
+  If the two kinds of site in the honeycomb are made different (as in boron nitride, or graphene
+  on a boron-nitride substrate) by an energy +Delta / -Delta, a band gap opens and the sheet
+  becomes an insulator. How spread out, at minimum, are the electrons' localised (Wannier)
+  orbitals in this insulator? That minimal spread is the Brillouin-zone-averaged quantum
+  metric, a directly measurable quantity (it equals an optical sum rule, Souza-Wilkens-Martin).
+
+MODEL / SET-UP
+  Honeycomb tight binding, hopping t = 1, on-site energy +Delta on A and -Delta on B:
+     H(k) = [[Delta, f], [f*, -Delta]],  f(k) = sum_{j=1..3} exp(i k.delta_j),
+  delta_j = the three nearest-neighbour vectors (physical orbital positions used; Bravais
+  lattice constant a = 1, so the C-C distance is 1/sqrt3). Lower band filled.
+  M(Delta) = (1/A_BZ) Int_BZ (g_xx + g_yy) d^2k    (units of a^2; multiply by 3 for units
+  of the C-C distance squared).  K(k) complete elliptic integral, PARAMETER k^2 (mpmath ellipk).
+
+THE FORMULA
+     M(Delta) = 1/48 + (9 - Delta^2) K(k) / ( 24 pi (1+Delta^2)^{3/4} (9+Delta^2)^{1/4} ),
+
+     k^2 = 1/2 + (3 - 6 Delta^2 - Delta^4) / ( 2 (1+Delta^2) sqrt((1+Delta^2)(9+Delta^2)) ).
+
+  Equivalently M = 1/48 + (9 - Delta^2)/48 * G_tri(3 + Delta^2), where
+  G_tri(w) = <1/(w + 2cos k1 + 2cos k2 + 2cos(k1-k2))> is the triangular-lattice Green function.
+  Values:
+    Delta = 1:   k^2 = (sqrt5 - 1)/(2 sqrt5) (golden ratio appears);
+                 M = 0.08115743880582535287728367820536975818157...
+    Delta = 1/2: M = 0.1352237617547092930141117606332085744003...
+    Delta = 2:   M = 0.03741227989852118050121467521925664006501...
+    Delta = 3:   M = 1/48 EXACTLY (= 1/16 in units of the C-C distance squared).
+  Limits (checked numerically): Delta -> infinity: M ~ 1/(4 Delta^2) (Delta^2 M = 0.2499991 at
+  Delta = 1000).  Delta -> 0: k -> 1 and M diverges logarithmically (the two Dirac cones),
+  M ~ (sqrt3/(8 pi)) ln(1/Delta) + const (slope 0.0689161119 = sqrt3/(8 pi) at Delta ~ 1e-6).
+
+DERIVATION (sketch)
+  For d = (Re f, Im f, Delta):  Tr g = (1/4) [ |grad f|^2/(|f|^2+D^2) - |grad |f|^2|^2 /(4(|f|^2+D^2)^2) ].
+  Two lattice facts make this collapse:
+   (i)  |grad f|^2 = sum_{j,l} delta_j.delta_l e^{ik(delta_j-delta_l)} = 1 - eps/6, where
+        eps = |f|^2 - 3 = 2 sum_j cos(k.a_j) is the triangular-lattice dispersion (|delta|^2 = 1/3,
+        delta_j.delta_l = -1/6 for j != l);
+   (ii) Laplacian(eps) = -eps (all |a_j| = 1), so by the divergence theorem on the BZ torus
+        <|grad eps|^2/(eps+w)^2> = <grad eps . grad(-1/(eps+w))> = <(1/(eps+w)) Lap eps>
+        = -<eps/(eps+w)> ... = w G - 1  (G = <1/(eps+w)>, w = 3 + D^2).
+  Hence M = (1/4)[(1 + w/6) G - 1/6] - (1/16)(w G - 1) = 1/48 + (12 - w) G/48.
+  G_tri(w): the k2-average is exact, 1/sqrt((w+2c)^2 - 8(1+c)), c = cos k1; the quadratic has the
+  complex-conjugate roots c = (-1 - D^2 +- 2iD)/2, and the standard reduction (Byrd-Friedman
+  259.00) gives G = K(k)/(pi sqrt(A B)), A^2 = (1+D^2)(9+D^2)/4, B = (1+D^2)/2,
+  k^2 = (4 - (A-B)^2)/(4AB), which simplifies to the expression above.
+  The special point Delta = 3 is where the Green-function term is multiplied by zero.
+
+VERIFICATION
+  1. Direct BZ average of Tr g (analytic derivatives, physical positions) by the periodic
+     trapezoid rule, which converges exponentially (tested: N = 90, 120, 160 agree), at 60 digits:
+        formula - numeric:  Delta=2 (N=110): 4e-62;  Delta=1 (N=140): 1e-60;  Delta=0.5 (N=220): 4e-54.
+     An earlier 50-digit run (Delta = 3, 3.7, 0.3, 2, 0.5) agreed only to ~1e-34 in every case; the
+     cause was a double-precision literal `1j/3` in the integrand. After fixing it the agreement
+     became 1e-54..1e-62 as listed. Delta = 3 gives 0.020833333333333333... = 1/48.
+  2. Reduction step checked separately: 1/48 + (9-D^2)G/48 with G from its own quadrature agrees with
+     the direct metric to 27 digits (D = 1, 0.5).
+  3. Independent code (check_fd_honey.py): Bloch Hamiltonian built from real-space bond vectors,
+     numerical diagonalisation, projector finite differences, 150x150 mesh:
+        D=1: 0.08115743880285 (formula 0.08115743880583);  D=3: 0.02083333333294 (1/48);
+        D=0.5: 0.13522376174440 (formula 0.13522376175471).
+
+NOVELTY
+  Searched: gapped graphene / hexagonal boron nitride integrated quantum metric exact expression,
+  elliptic integral, Wannier spread Omega_I analytic, Semenoff mass; and quantum-metric + Wannier
+  spread + optical sum rule. Found related works computing or measuring Omega_I (e.g. "Detecting
+  the spread of valence band Wannier functions by optical sum rules", PRB 110, 075203 (2024),
+  arXiv:2405.06146; "Absorbance marker ...", arXiv:2506.14501; "Enhanced quantum metric due to
+  vacancies in graphene", arXiv:2406.01408) but no closed form for the lattice model was seen, and
+  the exact value 1/48 at Delta = 3t was not seen. Full texts not accessible. Status: not found.
+
+Code: code/twoband_metric/honey.py (integrand), honey_trap.py (spectral BZ quadrature),
+      honey_formula.py (closed form + comparison), check_fd_honey.py (independent check).
