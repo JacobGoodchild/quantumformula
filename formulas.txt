@@ -156,6 +156,9 @@ THE FORMULA
     m = 3:  M = 1/8 + (K(k) - 3 Pi(8/9,k))/(72 pi), k^2 = 56/81, = 0.03874466795035547949099350085
     m = 4:  M = 1/8 - (K + 8 Pi(3/4,k))/(96 pi), k^2 = 7/16, = 0.01854679578624327731478554388
     m = 1/2: 0.286294083377026488160991...   m = 3/2: 0.19415426221702556424...
+  ALSO MINIMAL: both orbitals sit on the same site, which is a C4 fixed point; M is quadratic in the
+  (fictitious) orbital offset and C4-invariant, so its gradient vanishes there: this M is also the
+  MINIMAL quantum metric (the one that controls flat-band-type superfluid weight bounds).
   Limits: m -> infinity: M -> 0.  At the gap closing m -> 2, k' = |m^2-4|/m^2 -> 0 and
   M ~ -(1/(8 pi)) ln|m - 2| (logarithmic divergence from the Dirac cone).  m -> 0: diverges
   (two Dirac cones). Throughout the topological phase M > 1/(2 pi) = 0.159, as required.
@@ -238,6 +241,10 @@ THE FORMULA
     Delta = 1/2: M = 0.1352237617547092930141117606332085744003...
     Delta = 2:   M = 0.03741227989852118050121467521925664006501...
     Delta = 3:   M = 1/48 EXACTLY (= 1/16 in units of the C-C distance squared).
+  ALSO MINIMAL: the physical B position tau* = delta_1 is the fixed point of the affine symmetry
+  tau -> R tau + a_1 (R = C3 rotation about A), and M is quadratic in tau, so grad M(tau*) = 0: the value
+  above is also the MINIMAL quantum metric over orbital positions. (Same argument for diamond with its
+  tetrahedral symmetry, Formula 4.)
   Limits (checked numerically): Delta -> infinity: M ~ 1/(4 Delta^2) (Delta^2 M = 0.2499991 at
   Delta = 1000).  Delta -> 0: k -> 1 and M diverges logarithmically (the two Dirac cones),
   M ~ (sqrt3/(8 pi)) ln(1/Delta) + const (slope 0.0689161119 = sqrt3/(8 pi) at Delta ~ 1e-6).
