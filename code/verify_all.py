@@ -52,6 +52,9 @@ show("F8 diamond <|Omega|^2>, s = 9 (vs stored direct value)",O8(9),mp.mpf('0.00
 from trap_formula import wB_formula
 from trap import wB
 show("F9 Lieb CTQW trapped fraction, (0.37,0.81)",wB_formula(d1,d2),wB(d1,d2))
+from trap_general_formula import wBgen
+from trap_general_fit import wB4
+show("F9(general) trapped fraction, (1.37,0.61,2.2,0.93)",wBgen('1.37','0.61','2.2','0.93'),wB4(*[mp.mpf(x) for x in ('1.37','0.61','2.2','0.93')]))
 # F10 strained graphene magic mass
 from strained_hp import M as Ms
 mp.mp.dps=30; t=['1.3','0.8','1']; T=sum(mp.mpf(x)**2 for x in t)

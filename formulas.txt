@@ -8,7 +8,7 @@ INDEX OF RESULTS (see each entry for derivation, verification and novelty notes)
  6  Qi-Wu-Zhang: Berry-curvature fluctuations <Omega^2> in closed form (K, E) ........ not found
  7  Gapped graphene: Berry-curvature fluctuations via triangular Green fn G, G' ....... not found
  8  Gapped diamond: Berry-curvature fluctuations via FCC Green fn G, G', G'' .......... not found
- 9  Quantum-walk trapping on anisotropic staggered Lieb lattice (K and Pi) ............ not found
+ 9  Quantum-walk trapping on the Lieb lattice, all four hoppings (K and Pi) ........... not found
 10  Strained honeycomb / unequal-bond diamond: metric + universal magic-mass value ...... not found
 ------------------------------------------------------------------------------------------
 "Not found" = my web searches found no prior statement; arXiv/journal pages were not
@@ -722,6 +722,16 @@ THE FORMULA
   Values: (dx,dy) = (0.37,0.81): w_B = 0.620665592107644625980176 (return prob. w^2 = 0.385225777226333095);
           (0.1,0.9): 0.6848550595480753333513507;  (0.05,0.3): 0.5482826408182812728002624;
           (1/2,1/3): 0.4525909186428942600282689.
+
+FULLY GENERAL VERSION (added later on 2026-09-28): x-bond hoppings a (intra), c (inter), y-bond hoppings
+  b (intra), d (inter). With S1 = (a-c)^2+(b-d)^2, R1 = (a+c)^2+(b-d)^2, R2 = (a-c)^2+(b+d)^2:
+     w_B = 1 + 2 [ (b-d)^2 K(m) - S1 Pi(n,m) ] / ( pi sqrt(R1 R2) ),   m = 16abcd/(R1 R2),   n = 4ac/R1.
+  (m is the same modulus as in the general metric, Formula 1(g).) Found by PSLQ at 198 rational triples
+  (d = 1): the coefficients are the unique degree-2 rational fits (b-d)^2/(ac) and -S1/(ac) of K/pre, Pi/pre,
+  pre = sqrt(R1 R2)/(2ac). Checks: vs 40-digit quadrature at (1.37,0.61,2.2,0.93), (0.3,1.7,1.1,2.9),
+  (3.3,0.2,0.5,0.45): diffs ~1e-41; reduces to the formula above (diff 2e-41 at (0.37,0.81)); exact
+  diagonalisation of a 24x24 torus at (1.37,0.61,2.2,0.93): flat weight on B 0.6917201198367 (formula
+  0.6917201198384). Code: code/lieb_metric/trap_general_fit.py, trap_general_formula.py.
 
 DERIVATION (sketch)
   <b/S> = 1 - <a/S> with S = a + b; the ky-average is exact: <a/S>_y = a/sqrt((a+2p_y)^2 - 4q_y^2),
