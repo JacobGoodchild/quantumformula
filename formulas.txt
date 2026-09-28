@@ -120,7 +120,10 @@ NOVELTY
   diverging as delta -> 0, and give elementary closed forms only for ONE-dimensional Lieb and
   diamond chains. No elliptic-integral closed form for the 2D lattice was seen. The full texts
   could not be opened from this environment, so an equivalent formula could exist in an
-  appendix; experts should check. Status: not found in literature searched.
+  appendix; experts should check. A second search (Lieb + quantum metric + elliptic / appendix) also
+  surfaced Liang, Vanhala, Peotta, Siro, Harju, Torma, "Band geometry, Berry curvature, and superfluid
+  weight", PRB 95, 024515 (2017), and Iskin, PRA 105, 023312 (2022) (the latter treats kagome); their
+  appendices could not be checked. Status: not found in literature searched.
 
 Code: code/lieb_metric/hp.py (high-precision M), fit.py (PSLQ), aniso.py, aniso2.py, aniso3.py
       (anisotropic case), minimal.py (minimal metric), check_numeric.py, check_numeric2.py
