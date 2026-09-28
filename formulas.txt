@@ -6,6 +6,7 @@ INDEX OF RESULTS (see each entry for derivation, verification and novelty notes)
  4  Simplex bipartite lattices: general reduction, magic mass; gapped DIAMOND closed form  not found
  5  3D Lieb (perovskite) flat bands: metric via SC Green fn; = Watson/4 at delta = 0 ... not found
  6  Qi-Wu-Zhang: Berry-curvature fluctuations <Omega^2> in closed form (K, E) ........ not found
+ 7  Gapped graphene: Berry-curvature fluctuations via triangular Green fn G, G' ....... not found
 ------------------------------------------------------------------------------------------
 "Not found" = my web searches found no prior statement; arXiv/journal pages were not
 directly accessible from this environment, so experts should confirm novelty.
@@ -507,3 +508,65 @@ NOVELTY
 Code: code/twoband_metric/qwz_omega2.py (exact inner integral), qwz_omega2_fit.py,
       qwz_omega2_interp.py (identification), qwz_omega2_formula.py (tests),
       check_omega2_plaquette.py (independent check).
+
+==========================================================================================
+FORMULA 7 - Berry-curvature fluctuations of gapped graphene (hBN-type honeycomb insulator):
+            <Omega^2> = -(Delta^2+9)/384 * [ G + (Delta^2+3) G' ]  with the triangular Green fn
+Found: 2026-09-28.  Status: spectrally-accurate BZ quadrature (48+ digits), PSLQ over {1, G, G'}
+at 9 values of Delta^2 with exact rational coefficients, coefficient pattern fitted and then tested
+at 3 unseen values (agreement 1e-50) and by an independent projector-based finite-difference code
+(~1e-12).  Novelty: NOT FOUND in literature searched.
+==========================================================================================
+
+THE QUESTION (plain English)
+  In gapped graphene the Berry curvature (momentum-space "magnetic field") is positive in one
+  valley and negative in the other, so it averages to zero; but its mean square measures how
+  strongly the valleys are "magnetised" - the basis of valley-Hall physics. What is its exact
+  Brillouin-zone mean square, for any gap?
+
+MODEL / SET-UP
+  As in Formula 3: H = [[Delta, f],[f*, -Delta]], f = sum_j e^{ik.delta_j}, hopping 1, physical
+  orbital positions (NOTE: Berry curvature depends on the orbital embedding; this is the standard
+  physical-position convention), Bravais lattice constant 1. Lower band.
+  Omega = Delta Im(d_x f* d_y f)/(2 (|f|^2+Delta^2)^{3/2});  <Omega^2> = (1/A_BZ) Int_BZ Omega^2 d^2k.
+  G(w) = triangular-lattice Green function <1/(w + 2cos k1 + 2cos k2 + 2cos(k1-k2))>, which by
+  Formula 3 is   G(3+s) = 2 K(k) / (pi (1+s)^{3/4} (9+s)^{1/4}),
+  k^2 = 1/2 + (3 - 6s - s^2)/(2(1+s) sqrt((1+s)(9+s))),  s = Delta^2.
+
+THE FORMULA
+     <Omega^2> = -(s + 9)/384 * [ G(3+s) + (s + 3) G'(3+s) ],     s = Delta^2,  G' = dG/dw.
+  Values:  Delta = 1:      <Omega^2> = 0.0090094560716487458173...
+           Delta = sqrt3:  0.0018572242911788017057...
+           Delta^2 = 0.3:  0.0384163792830986649658661156024
+           Delta^2 = 2.7:  0.0021869610088614779836357328328
+  (The Chern number is 0, so this is also the variance.) As Delta -> 0 it diverges (curvature
+  concentrates at the Dirac points: the integral of Omega^2 ~ 1/Delta^2 per valley).
+
+DERIVATION / IDENTIFICATION (sketch)
+  <Omega^2> computed by the periodic trapezoid rule (exponentially convergent: N = 100 and 130 agree
+  to 48 digits). PSLQ with basis {<Omega^2>, 1, G, dG/ds} at 70 digits for s = 1,...,7, 9, 11 gave
+  coefficient of 1 = 0, of G = -(s+9)/384 (-5/192, -11/384, -1/32, ... ) and of G' = -(s+3)(s+9)/384
+  (-40/384, -55/384, -72/384, 91, 112, 135, 160, 216, 280 /384). (Including G'' only returns the
+  second-order differential equation that G satisfies, e.g. G + 8G' + 5G'' = 0 at s = 1.)
+  A derivation in the style of Formula 3 should exist: Im(d_x f* d_y f) is the Jacobian of k -> f,
+  and |f|^2 depends on k only through the triangular dispersion; not yet written out.
+
+VERIFICATION
+  1. PSLQ relations at 9 integer values of s, all fitting the two rational functions exactly.
+  2. Formula minus direct 50-digit quadrature at unseen s: 0.3 (N=260): -1e-50; 2.7 (N=130): -7e-52;
+     0.05 (N=500): 7e-50.
+  3. Independent code (check_honey_omega2_proj.py): Berry curvature from the numerical projector,
+     Omega = -i Tr(P[dxP, dyP]) with finite differences, physical-position Hamiltonian, 150^2 mesh:
+        s = 1: 0.009009456070711 (formula 0.009009456071649);  s = 3: 0.001857224291065 (0.001857224291179);
+        mean curvature ~ 1e-13 (Chern number 0).
+     (A first plaquette-method check was wrong because physical-position eigenvectors are not periodic
+      across the BZ boundary; it was discarded, not used.)
+
+NOVELTY
+  Searched: gapped graphene / honeycomb staggered potential Berry curvature squared average exact
+  lattice, Berry curvature fluctuation analytic hBN. Found the standard continuum (Dirac) curvature
+  formula and works on Berry-curvature fluctuations / trace-condition violation in other contexts,
+  but no lattice closed form for <Omega^2>. Status: not found in literature searched.
+
+Code: code/twoband_metric/honey_omega2.py, honey_omega2_pslq.py, honey_omega2_G.py (identification),
+      honey_omega2_formula.py (tests), check_honey_omega2_proj.py (independent check).
