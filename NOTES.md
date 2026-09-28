@@ -69,3 +69,8 @@ XX/XY chain items and quantum-information items.
   a = 2 the G' coefficient is exactly -(w+6)^2/384. Probably rational in w with a denominator involving
   the bond invariants (t1t2t3, sum t_i^2 t_j^2); needs a real derivation. Code:
   code/twoband_metric/strained_omega2.py, strained_omega2_fit.py.
+- OPEN LEAD (Lieb, four independent hoppings a1,a2 | b1,b2): M is still K and E only (PSLQ: constant and
+  Pi coefficients vanish), with prefactor 1/pre, pre^2 = (1-c1)(-1-c2), c1,2 = (+-2b1b2 - Px - Py)/(2a1a2);
+  e.g. (3,1,1,1): M = (5K - 4E)/(5 pi pre). The simple (A0/(4s))(2K-E)/pi form of Formula 1(b) holds
+  only on special subfamilies (it matched (1,1/2,3/2,1) and near-decoupled cases, failed elsewhere).
+  Coefficient functions of the three ratios not yet fitted. Code: code/lieb_metric/lieb4*.py.
