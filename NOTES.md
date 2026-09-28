@@ -12,7 +12,7 @@ END OF PHASE 1 (2026-09-28, ~17:00-18:00 UTC; the user extended it to about 1h15
   F6 QWZ Berry-curvature fluctuations <Omega^2> (K, E only).
   F7 gapped graphene <Omega^2> = -(s+9)/384 [G + (s+3)G'].
   F8 gapped diamond <|Omega|^2> = [(s+8)G + (5s^2+76s+128)G' + 2s(s+4)(s+16)G'']/1024.
-  F9 quantum-walk trapping fraction on the anisotropic staggered Lieb lattice (K, Pi).
+  F9 quantum-walk trapping fraction on the Lieb lattice, all four hoppings (K, Pi).
   F10 unequal bonds: magic mass Delta*^2 = z T/(z-2) gives a universal value (1/48 honeycomb, 1/64 diamond).
 Main technique: the inner BZ integral is exact when the denominator is linear in one cosine;
 divergence-theorem reduction to lattice Green functions; PSLQ over {1,K,E,Pi} or {1,G,G',G''};
@@ -70,8 +70,12 @@ XX/XY chain items and quantum-information items.
   a = 2 the G' coefficient is exactly -(w+6)^2/384. Probably rational in w with a denominator involving
   the bond invariants (t1t2t3, sum t_i^2 t_j^2); needs a real derivation. Code:
   code/twoband_metric/strained_omega2.py, strained_omega2_fit.py.
-- OPEN LEAD (Lieb, four independent hoppings a1,a2 | b1,b2): M is still K and E only (PSLQ: constant and
+- RESOLVED (see F1(g),(h), F9 general) - was: OPEN LEAD (Lieb, four independent hoppings a1,a2 | b1,b2): M is still K and E only (PSLQ: constant and
   Pi coefficients vanish), with prefactor 1/pre, pre^2 = (1-c1)(-1-c2), c1,2 = (+-2b1b2 - Px - Py)/(2a1a2);
   e.g. (3,1,1,1): M = (5K - 4E)/(5 pi pre). The simple (A0/(4s))(2K-E)/pi form of Formula 1(b) holds
   only on special subfamilies (it matched (1,1/2,3/2,1) and near-decoupled cases, failed elsewhere).
   Coefficient functions of the three ratios not yet fitted. Code: code/lieb_metric/lieb4*.py.
+- Late session: general four-hopping Lieb results found by PSLQ on 200-250 random rational triples and exact
+  multivariate rational fitting (null-space method); key simplification: everything is expressed through
+  S1,2 = (a-+c)^2+(b-+d)^2 and R1,2 = (a+-c)^2+(b-+d)^2, modulus k^2 = 16abcd/(R1R2).
+- code/verify_all.py re-checks every formula in ~10 s (all pass as of 18:10 UTC).
