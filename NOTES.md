@@ -1,6 +1,12 @@
 # NOTES — working log for quantumformula
 
 ## Status summary
+UPDATE 2026-09-28 18:45 UTC: overnight run STOPPED EARLY at the user's request (~20 min in).
+Added during it: F11 (Abrikosov vortex-lattice beta in all Landau levels, higher moments, shear stiffness)
+and F12 (exact Mueller-Ho two-component vortex-lattice phase boundaries). Next lead when resuming:
+Park-Huse fourfold-anisotropy vortex lattice (PRB 58, 9427 (1998)) - square/rhombic transition may be an
+exact Hessian condition at a CM point, same method as F12. Other open items: overnight plan list below.
+
 END OF PHASE 1 (2026-09-28, ~17:00-18:00 UTC; the user extended it to about 1h15).
 10 verified results, all in formulas.txt, none found in the literature searched:
   F1 Lieb flat band quantum metric: (2K-E)/(4pi); x/y components; minimal metric; and (g) a closed form

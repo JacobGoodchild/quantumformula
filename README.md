@@ -29,5 +29,7 @@ should be confirmed by experts.
 6-8. Exact Berry-curvature fluctuations for Qi-Wu-Zhang, gapped graphene and gapped diamond.
 9. Exact fraction of a quantum walker trapped forever on the anisotropic Lieb lattice.
 10. Strained graphene / distorted diamond: the magic-mass value is universal (any bond strengths).
+11. Abrikosov vortex lattices: exact beta in all Landau levels, higher moments, shear stiffness.
+12. Rotating two-component condensates: exact vortex-lattice phase boundaries.
 
 Predecessor project: https://github.com/JacobGoodchild/findformula
