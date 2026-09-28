@@ -1,7 +1,107 @@
 INDEX OF RESULTS (see each entry for derivation, verification and novelty notes)
 ------------------------------------------------------------------------------------------
-(no entries yet)
+ 1  Lieb-lattice flat band: exact integrated + minimal quantum metric (2K-E)/(4pi) ...... not found
 ------------------------------------------------------------------------------------------
 "Not found" = my web searches found no prior statement; arXiv/journal pages were not
 directly accessible from this environment, so experts should confirm novelty.
 ==========================================================================================
+
+==========================================================================================
+FORMULA 1 - Quantum geometry of the Lieb-lattice flat band: exact integrated and minimal
+            quantum metric for staggered hopping (the quantity behind flat-band superfluidity)
+Found: 2026-09-28.  Status: closed form found by PSLQ (60 digits, 6 values of delta) and then
+checked by direct high-precision subtraction at random parameters (agreement to 1e-50) and by
+an independent from-scratch numerical code (agreement ~1e-11, limited by finite differences).
+Novelty: NOT FOUND in literature searched. The quantity is studied in current research, where
+it seems to be computed numerically; the full texts could not be read from here (see NOVELTY).
+==========================================================================================
+
+THE QUESTION (plain English)
+  In some crystals an electron band is perfectly "flat": the electrons in it have no kinetic
+  energy at all, so by the usual reasoning they could not flow. Yet if they pair up
+  (superconductivity / superfluidity of cold atoms) they CAN carry a current, and how easily
+  they do so is set by the "quantum metric" of the band: a measure of how quickly the
+  electron's quantum state changes shape as its momentum changes. Averaged over all momenta
+  it is a pure number. The Lieb lattice (a square lattice with an extra atom in the middle of
+  every edge) is the textbook flat-band crystal and the one used in cold-atom and photonic
+  experiments. Making the bonds alternate strong/weak (strength 1+delta, 1-delta) isolates the
+  flat band. What is the averaged quantum metric, exactly, as a function of delta?
+
+MODEL / SET-UP
+  Lieb lattice, lattice constant 1: corner site A at (0,0), edge sites B at (s,0), C at (0,s).
+  Hopping A-B and A-C inside the unit cell: 1+delta_x (resp. 1+delta_y); between cells:
+  1-delta_x (resp. 1-delta_y).  Bloch Hamiltonian (orbital positions included in the phases)
+     H(k) = [[0, f, g], [f*, 0, 0], [g*, 0, 0]],
+     f = (1+dx) e^{i kx s} + (1-dx) e^{-i kx (1-s)},  g = same with ky, dy.
+  The band E = 0 is exactly flat, with Bloch vector psi = (0, g, -f)/sqrt(|f|^2+|g|^2); for
+  dx, dy != 0 it is separated from the other bands by a gap.
+  Quantum metric  g_ij(k) = Re<d_i psi|(1-|psi><psi|)|d_j psi>.
+  Integrated metric  M = (1/(2pi)^2) Int_BZ [g_xx + g_yy] d^2k   (dimensionless, a = 1).
+  K(k), E(k) = complete elliptic integrals of the first/second kind with MODULUS k
+  (mpmath: ellipk(k^2), ellipe(k^2)).
+
+THE FORMULA
+  (a) Isotropic staggering dx = dy = delta, orbitals at the bond midpoints (s = 1/2):
+        M = ( 2 K(k) - E(k) ) / (4 pi),        k = (1 - delta^2)/(1 + delta^2).
+      Examples:  delta = 1/2 (k = 3/5):  M = 0.16579363089945170052923373923434968074939742050657
+                 delta = 3/10:           M = 0.23065200969101156099961480898799757884...
+      delta -> 1 (isolated trimers): M -> 1/8.   delta -> 0: M ~ (1/(2pi)) ln(2/delta) - 1/(4pi),
+      the logarithmic divergence of the band touching (k' = 2 delta/(1+delta^2)).
+
+  (b) Anisotropic staggering, s = 1/2.  With k_x = (1-dx^2)/(1+dx^2), k_y = (1-dy^2)/(1+dy^2):
+        M = (2 + k_x + k_y) / ( 8 sqrt((1+k_x)(1+k_y)) ) * ( 2 K(k) - E(k) ) / pi,
+        with k^2 = k_x k_y   (i.e. elliptic PARAMETER m = k_x k_y).
+      Equivalently the prefactor is (2+dx^2+dy^2)/(8 sqrt((1+dx^2)(1+dy^2))).
+      Example dx = 3/7, dy = 5/11: M = 0.17980378519008855485546405197534216451695784433779
+
+  (c) Minimal quantum metric (minimum over all orbital positions; isotropic delta).
+      M depends on where the orbitals are placed; it is exactly quadratic in the B-C relative
+      position, and by the x<->y symmetry the minimum lies on the family s above. Result:
+        M_min = [ (2K - E) E - k'^2 K^2 ] / ( 4 pi E ),     k' = sqrt(1-k^2) = 2 delta/(1+delta^2),
+        attained at  s* = 1/2 - k' K(k) / (2 E(k)).
+      Examples: delta = 1/2: M_min = 0.0557110773516971020044417811308, s* = 0.00616337240269203...
+                delta = 1/4: M_min = 0.1847533407197373898290808843634, s* = 0.06381945082763012...
+      delta -> 1: M_min -> 0 and s* -> 0 (orbitals collapse onto the trimer centre), as it must.
+
+DERIVATION (sketch)
+  psi is a CP^1 state with ratio z = -f/g, so g_xx = |f'|^2 |g|^2/(|f|^2+|g|^2)^2 etc.
+  With a = |f|^2 = 2(1+d^2) + 2(1-d^2) cos kx one finds |f'|^2 = (1+d^2) - a/4 (for s = 1/2),
+  hence Tr g = (1+d^2)/S - ab/(2 S^2), S = a + b = 4(1+d^2)[1 + (k/2)(cos kx + cos ky)].
+  <1/S> is the square-lattice Green function = K(k)/(2 pi (1+d^2)); <ab/S^2> reduces to it and
+  its k-derivative and equals E(k)/(2 pi). This gives (a). For a general position s the extra
+  phase adds 4 delta t b/S^2 + t^2 ab/S^2 to g_xx (t = s - 1/2; uses Im(f* f') = 2 delta), and
+  similarly for g_yy, so M(t) = M(0) + 4 delta t <1/S> + 2 t^2 <ab/S^2>; minimising gives (c).
+  (b) was identified by PSLQ with basis {1, K/pi, E/pi, (sqrt-weighted variants)} and then the
+  rational prefactor fitted from 7 parameter pairs; it reduces to (a) when dx = dy.
+
+VERIFICATION
+  1. PSLQ at 60 digits, delta = 1/2, 1/3, 1/5, 2/3, 3/4, 1/7: in every case the relation
+     4 M - 2 K/pi + E/pi = 0 is returned (no other relation with coefficients < 1e8).
+  2. Formula (b) minus direct 50-digit quadrature (inner integral done exactly, outer by
+     tanh-sinh): (3/7,5/11) diff -3e-52; (0.1,0.9) diff 0; (0.37,0.81) diff 0 at 50 digits.
+  3. Independent code (check_numeric2.py): numerical diagonalisation of H(k), flat-band
+     projector P, metric = (1/2) Tr(dP dP) by central finite differences, 160x160 k-mesh:
+        (3/7,5/11): 0.17980378518293   vs formula 0.17980378519009
+        (0.37,0.81): 0.14341786362649  vs formula 0.14341786363087
+        delta = 1/2, s = 1/2: 0.16579363089380 vs 0.16579363089945
+  4. Minimal metric: numerical minimisation over s with the independent code:
+        delta = 1/2: min 0.0557110773484 at s = 0.0061638   (formula 0.0557110773517, 0.0061634)
+        delta = 1/4: min 0.1847533407024 at s = 0.0638195   (formula 0.1847533407197, 0.0638195)
+
+NOVELTY
+  Searched: "Lieb lattice staggered hopping integrated quantum metric elliptic integral",
+  "Lieb lattice quantum metric elliptic integral superfluid weight dimerized", minimal quantum
+  metric + Lieb + orbital positions, and variants. Found: Julku, Peotta, Vanhala, Kim, Torma,
+  "Geometric origin of superfluidity in the Lieb lattice flat band", PRL 117, 045303 (2016);
+  Huhtinen, Herzog-Arbeitman, Chew, Bernevig, Torma, "Revisiting flat band superconductivity:
+  dependence on minimal quantum metric and band touchings", PRB 106, 014518 (2022);
+  "Flat-band ratio and quantum metric in the superconductivity of modified Lieb lattices"
+  (Commun. Phys. 2025, arXiv:2404.12993). Search snippets describe the metric as tuned by delta,
+  diverging as delta -> 0, and give elementary closed forms only for ONE-dimensional Lieb and
+  diamond chains. No elliptic-integral closed form for the 2D lattice was seen. The full texts
+  could not be opened from this environment, so an equivalent formula could exist in an
+  appendix; experts should check. Status: not found in literature searched.
+
+Code: code/lieb_metric/hp.py (high-precision M), fit.py (PSLQ), aniso.py, aniso2.py, aniso3.py
+      (anisotropic case), minimal.py (minimal metric), check_numeric.py, check_numeric2.py
+      (independent finite-difference checks).
