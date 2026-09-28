@@ -63,7 +63,7 @@ THE FORMULA
 
   (d) The separate directional components (anisotropic staggering, s = 1/2) - these set the
       superfluid-weight TENSOR D_xx, D_yy of a flat-band superconductor on this lattice.
-      Added later on 2026-09-28 (PSLQ at 60 digits on 36 (k_x,k_y) pairs with basis {sqrt((1+k_x)(1+k_y)) K,
+      Added later on 2026-09-28 (PSLQ at 60 digits on 29 (k_x,k_y) pairs plus 22 pairs with k_x = 1/2 with basis {sqrt((1+k_x)(1+k_y)) K,
       same x E}; the coefficients fitted by exact rational interpolation):
         Int g_xx = sqrt((1+k_y)/(1+k_x)) / (16 pi) * [ 4 K(k) - (1-k_x)(2+k_x+k_y)/(1-k_x k_y) * E(k) ],
         k^2 = k_x k_y;  Int g_yy = same with x <-> y.
