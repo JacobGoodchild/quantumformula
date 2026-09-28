@@ -1,6 +1,7 @@
 INDEX OF RESULTS (see each entry for derivation, verification and novelty notes)
 ------------------------------------------------------------------------------------------
  1  Lieb-lattice flat band: exact integrated + minimal quantum metric (2K-E)/(4pi) ...... not found
+ 2  Qi-Wu-Zhang Chern insulator: exact integrated quantum metric, all m (K and Pi) ...... not found
 ------------------------------------------------------------------------------------------
 "Not found" = my web searches found no prior statement; arXiv/journal pages were not
 directly accessible from this environment, so experts should confirm novelty.
@@ -105,3 +106,91 @@ NOVELTY
 Code: code/lieb_metric/hp.py (high-precision M), fit.py (PSLQ), aniso.py, aniso2.py, aniso3.py
       (anisotropic case), minimal.py (minimal metric), check_numeric.py, check_numeric2.py
       (independent finite-difference checks).
+
+==========================================================================================
+FORMULA 2 - Exact integrated quantum metric (gauge-invariant Wannier spread) of the
+            Qi-Wu-Zhang Chern insulator, one formula for every mass m (both phases)
+Found: 2026-09-28.  Status: inner BZ integral done exactly (symbolic residues), outer by 60-digit
+quadrature; closed form found by PSLQ at 8 values of m > 2 and coefficient functions fitted;
+the resulting single formula then checked against 50-digit quadrature at 10 further values of m
+covering both phases and negative m (agreement ~1e-51), against a slow direct 2D quadrature,
+and against an independent finite-difference code (~1e-10).
+Novelty: NOT FOUND in literature searched (quantity is widely computed numerically).
+==========================================================================================
+
+THE QUESTION (plain English)
+  The Qi-Wu-Zhang model is the simplest lattice model of a "Chern insulator": an insulator whose
+  electrons carry a quantised Hall current along the edges (for 0 < |m| < 2) or not (|m| > 2).
+  The topology is captured by an integer (the Chern number). The quantum metric measures,
+  in addition, how "spread out" the electrons' Wannier orbitals must be: averaged over the
+  Brillouin zone it equals the minimal possible spread of localised electron orbitals
+  (Marzari-Vanderbilt invariant Omega_I). It is not quantised, and is always at least
+  |Chern|/(2 pi). What is it, exactly, as a function of m?
+
+MODEL / SET-UP
+  H(k) = sin kx sigma_x + sin ky sigma_y + (m + cos kx + cos ky) sigma_z, lower band filled.
+  Quantum metric g_ij of the lower band; for a two-band model
+     Tr g = sum_i [ |d_i d|^2 |d|^2 - (d . d_i d)^2 ] / (4 |d|^4).
+  M(m) = (1/(2pi)^2) Int_BZ (g_xx + g_yy) d^2k  ( = Omega_I / (2pi) per unit cell, a = 1 ).
+  K(k), Pi(n,k): complete elliptic integrals of the 1st and 3rd kind, with PARAMETER k^2
+  (mpmath: ellipk(k2), ellippi(n, k2)); Pi(n,k) = Int_0^{pi/2} dt/((1-n sin^2 t) sqrt(1-k^2 sin^2 t)).
+
+THE FORMULA
+  For every real m != 0, +-1, +-2:
+
+    M(m) = 1/8 - (m^2 - 4m + 2)/(4 m^2 (m-1)) * K(k)/pi - (m-2)^2/(4 m (m-1)) * Pi(n,k)/pi,
+
+    with  k^2 = 8 (m^2 - 2)/m^4,   n = 4 (m-1)/m^2.
+
+  (M is even in m; for 0 < |m| < sqrt2, k^2 < 0 and the formula is used as it stands - the real
+   analytic continuation, which mpmath evaluates directly. The value at m = 1 is the limit.)
+
+  Special values:
+    m = 1:  M = [ 3 + (7 K - 9 E)/pi ] / 24  with k^2 = 8/9 (E = 2nd kind)
+             = 0.22681551281725283816876252594820706177
+    m = 3:  M = 1/8 + (K(k) - 3 Pi(8/9,k))/(72 pi), k^2 = 56/81, = 0.03874466795035547949099350085
+    m = 4:  M = 1/8 - (K + 8 Pi(3/4,k))/(96 pi), k^2 = 7/16, = 0.01854679578624327731478554388
+    m = 1/2: 0.286294083377026488160991...   m = 3/2: 0.19415426221702556424...
+  Limits: m -> infinity: M -> 0.  At the gap closing m -> 2, k' = |m^2-4|/m^2 -> 0 and
+  M ~ -(1/(8 pi)) ln|m - 2| (logarithmic divergence from the Dirac cone).  m -> 0: diverges
+  (two Dirac cones). Throughout the topological phase M > 1/(2 pi) = 0.159, as required.
+
+DERIVATION (sketch)
+  Tr g is a rational function of cos kx, cos ky, and |d|^2 = A + B cos ky with
+  A = 2 + m^2 + 2m cos kx, B = 2(m + cos kx) is LINEAR in cos ky. So the ky-average is done
+  exactly (partial fractions in u = A + B cos ky; <1/u> = D^{-1/2}, <1/u^2> = A D^{-3/2}),
+  with D = A^2 - B^2 = (m^4 + 4) + 4 m^3 c + 4 (m^2 - 1) c^2, c = cos kx.
+  D has roots c = -(m^2-2m+2)/(2(m-1)) and -(m^2+2m+2)/(2(m+1)) (discriminant 16(m^2-2)^2),
+  so the kx-average is a complete elliptic integral over the four branch points {1,-1,r1,r2}:
+  k^2 = cross-ratio = 8(m^2-2)/m^4, and the rational factors produce a third-kind integral with
+  characteristic n = 4(m-1)/m^2. Coefficients were identified by PSLQ (basis {1,K/pi,E/pi,Pi/pi};
+  E drops out) at m = 9/4, 5/2, 3, 7/2, 4, 5, 6, 8 and fitted to rational functions:
+  coefficient of K/pi times 4m^2(m-1) gave 1, -2, -7, -14, -34 ... = -(m^2-4m+2), etc.
+
+VERIFICATION
+  1. PSLQ, 60 digits, 8 values of m > 2 and 4 values in 1 < m < 2: every relation has the stated
+     coefficients (e.g. m = 5/4 gives K-coefficient 137/351 and Pi-coefficient -125/1404, both
+     exactly as the formula predicts).
+  2. Unified formula minus 50-digit quadrature: m = 0.5: 0; 0.333: 0; 0.9: 3e-51; 1.1: -2e-51;
+     1.7: 7e-52; 2.5: -1e-51; 7: 5e-53; 0.05: 0; -0.5: 1e-51; -3: -3e-52.
+  3. m = 1: limit of the formula from both sides (difference 2e-36 at offset 1e-35) equals
+     [3 + (7K-9E)/pi]/24 (PSLQ at 40 digits); a slow direct 2D quadrature gives 0.226815512817253.
+  4. Independent code (check_fd.py): numerical diagonalisation, projector finite differences,
+     200x200 mesh:  m=1: 0.2268155128033 (formula 0.2268155128173);  m=0.5: 0.2862940833516
+     (0.2862940833770);  m=3: 0.0387446679478 (0.0387446679504);  m=1.7: 0.1887768903908
+     (0.1887768904159).
+
+NOVELTY
+  Searched: "Qi-Wu-Zhang model integrated quantum metric exact analytic expression elliptic
+  integral", "quantum metric Chern insulator elliptic integral third kind / complete elliptic
+  integrated trace QWZ Wannier spread analytic". Found many works that compute this quantity
+  numerically or use it (e.g. "Scaling of the integrated quantum metric in disordered topological
+  phases", arXiv:2406.12677; "The Bott metric", arXiv:2604.04447; Mera & Ozawa, "Kahler geometry
+  and Chern insulators", PRB 104, 045103 (2021) / arXiv:2103.11583; corner charge fluctuation
+  paper arXiv:2406.17023; an analytic study of Dirac models with parabolic mass, arXiv:2408.02951,
+  which treats a continuum model, not the lattice integral). No closed form for the lattice QWZ
+  integrated metric was seen. Status: not found in literature searched.
+
+Code: code/twoband_metric/qwz.py (slow direct 2D), qwz_fast.py (exact inner integral),
+      qwz_pslq.py, qwz_fit.py, qwz_fit2.py (identification), qwz_formula.py (final formula +
+      comparison), check_fd.py (independent finite-difference check).
