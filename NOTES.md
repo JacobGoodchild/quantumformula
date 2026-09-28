@@ -2,7 +2,7 @@
 
 ## Status summary
 END OF PHASE 1 (2026-09-28, ~17:00-18:00 UTC; the user extended it to about 1h15).
-9 verified results, all in formulas.txt, none found in the literature searched:
+10 verified results, all in formulas.txt, none found in the literature searched:
   F1 Lieb flat band quantum metric: (2K-E)/(4pi); anisotropic total and x/y components; minimal metric.
   F2 Qi-Wu-Zhang integrated quantum metric, one formula (K, Pi) valid for all m.
   F3 gapped graphene metric = 1/48 + (9-D^2) G_tri/48, exactly 1/48 at D = 3 (also the minimal metric).
@@ -12,6 +12,7 @@ END OF PHASE 1 (2026-09-28, ~17:00-18:00 UTC; the user extended it to about 1h15
   F7 gapped graphene <Omega^2> = -(s+9)/384 [G + (s+3)G'].
   F8 gapped diamond <|Omega|^2> = [(s+8)G + (5s^2+76s+128)G' + 2s(s+4)(s+16)G'']/1024.
   F9 quantum-walk trapping fraction on the anisotropic staggered Lieb lattice (K, Pi).
+  F10 unequal bonds: magic mass Delta*^2 = z T/(z-2) gives a universal value (1/48 honeycomb, 1/64 diamond).
 Main technique: the inner BZ integral is exact when the denominator is linear in one cosine;
 divergence-theorem reduction to lattice Green functions; PSLQ over {1,K,E,Pi} or {1,G,G',G''};
 exact rational interpolation of coefficient functions; checks at held-out parameters and with

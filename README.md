@@ -27,5 +27,6 @@ should be confirmed by experts.
 5. 3D Lieb (perovskite) flat bands: metric = Watson's integral / 4 at zero staggering.
 6-8. Exact Berry-curvature fluctuations for Qi-Wu-Zhang, gapped graphene and gapped diamond.
 9. Exact fraction of a quantum walker trapped forever on the anisotropic Lieb lattice.
+10. Strained graphene / distorted diamond: the magic-mass value is universal (any bond strengths).
 
 Predecessor project: https://github.com/JacobGoodchild/findformula
