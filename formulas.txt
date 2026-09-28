@@ -8,6 +8,7 @@ INDEX OF RESULTS (see each entry for derivation, verification and novelty notes)
  6  Qi-Wu-Zhang: Berry-curvature fluctuations <Omega^2> in closed form (K, E) ........ not found
  7  Gapped graphene: Berry-curvature fluctuations via triangular Green fn G, G' ....... not found
  8  Gapped diamond: Berry-curvature fluctuations via FCC Green fn G, G', G'' .......... not found
+ 9  Quantum-walk trapping on anisotropic staggered Lieb lattice (K and Pi) ............ not found
 ------------------------------------------------------------------------------------------
 "Not found" = my web searches found no prior statement; arXiv/journal pages were not
 directly accessible from this environment, so experts should confirm novelty.
@@ -644,3 +645,63 @@ NOVELTY
 
 Code: code/diamond_metric/diamond_omega2.py (quadrature; logs om2_s*.log), diamond_omega2_fit.py
       (PSLQ + interpolation), diamond_omega2_formula.py, check_omega2_proj_diamond.py.
+
+==========================================================================================
+FORMULA 9 - How much of a quantum walker stays trapped forever on the anisotropic staggered Lieb
+            lattice: exact flat-band weight of an edge site (elliptic K and Pi)
+Found: 2026-09-28.  Status: PSLQ (50 digits) at 24 rational (k_x,k_y) pairs with the analytically
+derived modulus and characteristic; coefficients read off exactly; formula checked at irrational
+parameters (40 digits) and by exact diagonalisation of finite tori (flat weight exact to 1e-14 at
+L = 18; time-averaged return probability -> w^2 as 1/L^2).  Novelty: NOT FOUND in literature searched.
+==========================================================================================
+
+THE QUESTION (plain English)
+  Put a quantum particle on one of the "edge" atoms of the Lieb lattice and let it evolve freely
+  (continuous-time quantum walk). Part of it spreads away, but part is caught in the flat band,
+  whose states are standing waves that never move: it stays near the start forever. With equal
+  bond staggering in x and y, symmetry gives exactly half. What fraction is trapped when the x- and
+  y-bonds alternate differently?
+
+MODEL / SET-UP
+  Lieb lattice as in Formula 1 (hoppings 1 +- delta_x on the x-bonds, 1 +- delta_y on the y-bonds).
+  Start on an x-edge site B. The trapped fraction is the flat-band weight
+     w_B = <|g|^2/(|f|^2+|g|^2)>_BZ,
+  the long-time average of the return probability is w_B^2 (the dispersive part decays), and the
+  probability of finding the walker on the y-edge sites of the trapping modes is 1 - w_B.
+  k_x = (1-dx^2)/(1+dx^2), k_y = (1-dy^2)/(1+dy^2). Elliptic integrals with PARAMETER m:
+  K(m), Pi(n,m) (mpmath ellipk(m), ellippi(n,m)).
+
+THE FORMULA
+     w_B = 1 + (1/pi) [ (1-k_y) sqrt((1+k_x)/(1+k_y)) K(m)  -  2 (1 - k_x k_y)/sqrt((1+k_x)(1+k_y)) Pi(n,m) ],
+     m = k_x k_y,   n = k_x (1+k_y)/(1+k_x).
+  Isotropic check: k_x = k_y = k gives n = k, m = k^2, and with the classical identity
+  Pi(k, k^2) = pi/(4(1-k)) + K/2 the formula reduces to exactly 1/2.
+  Values: (dx,dy) = (0.37,0.81): w_B = 0.620665592107644625980176 (return prob. w^2 = 0.385225777226333095);
+          (0.1,0.9): 0.6848550595480753333513507;  (0.05,0.3): 0.5482826408182812728002624;
+          (1/2,1/3): 0.4525909186428942600282689.
+
+DERIVATION (sketch)
+  <b/S> = 1 - <a/S> with S = a + b; the ky-average is exact: <a/S>_y = a/sqrt((a+2p_y)^2 - 4q_y^2),
+  a = 2p_x + 2q_x cos kx. The square root vanishes at cos kx = -(2+k_x-k_x k_y)/(k_x(1+k_y)) and
+  -(2+k_x)/k_x, so with the branch points {1,-1} the cross-ratio gives m = k_x k_y and the pole gives the
+  characteristic n = 2/(1-c_1) = k_x(1+k_y)/(1+k_x). PSLQ with basis {1, sK, sPi} (s = sqrt((1+k_y)/(1+k_x)))
+  at 24 pairs gave coefficients A = (1+k_x)(1-k_y)/(1+k_y) and B = -2(1-k_x k_y)/(1+k_y), e.g.
+  (1/3,5/6): A = 4/33, B = -26/33.
+
+VERIFICATION
+  1. Formula vs 40-digit quadrature: (0.37,0.81): -1e-41; (0.1,0.9): 0; (0.6,0.6): 0.5 exactly (diff -1e-41);
+     (0.05,0.3): 1e-41. Symmetry w_B(dx,dy) + w_B(dy,dx) = 1 holds (0.45259.. + 0.54741.. = 1).
+  2. Independent exact diagonalisation (trap_ed.py) of L x L tori at (0.37,0.81):
+       flat-band weight on B: L=12: 0.6206655926461, L=18: 0.6206655921077, L=24: 0.6206655921076 (formula
+       0.62066559210764);  long-time-average return probability: 0.38715, 0.38613, 0.38575 -> w^2 = 0.38523
+       (excess 0.0019, 0.0009, 0.0005 ~ 1/L^2, the finite-size dispersive contribution).
+
+NOVELTY
+  Searched: continuous-time quantum walk Lieb lattice flat band trapping probability localisation, exact,
+  anisotropic staggered. Found flat-band localisation in photonic Lieb lattices (e.g. "Observation of a
+  localized flat-band state in a photonic Lieb lattice", arXiv:1412.6342) and quantum-walk works with
+  flat-band localisation (e.g. arXiv:2609.08973), but no closed form for the trapped fraction.
+  (Predecessor project found closed forms for GROVER-walk trapping on Lieb etc.; this is the
+  continuous-time walk with anisotropic staggering, a different quantity.) Status: not found.
+
+Code: code/lieb_metric/trap.py, trap_fit.py (identification), trap_formula.py, trap_ed.py (independent ED).
