@@ -10,7 +10,7 @@ INDEX OF RESULTS (see each entry for derivation, verification and novelty notes)
  8  Gapped diamond: Berry-curvature fluctuations via FCC Green fn G, G', G'' .......... not found
  9  Quantum-walk trapping on the Lieb lattice, all four hoppings (K and Pi) ........... not found
 10  Strained honeycomb / unequal-bond diamond: metric + universal magic-mass value ...... not found
-11  Abrikosov vortex lattice: beta in all Landau levels + higher moments, Gamma closed forms  not found
+11  Abrikosov vortex lattice: beta (all Landau levels), higher moments, shear stiffness ... not found
 ------------------------------------------------------------------------------------------
 "Not found" = my web searches found no prior statement; arXiv/journal pages were not
 directly accessible from this environment, so experts should confirm novelty.
@@ -886,6 +886,20 @@ THE FORMULA
   the unit cell with the (exponentially convergent) periodic midpoint rule, M = 70, 90, 120 identical to 40-70
   digits; the real-space B_2 reproduces the closed forms of beta_0 above.
   Code: code/abrikosov/gamma6.py, moments_hp.py, moments_hp2.py.
+
+(c) SHEAR STIFFNESS of the vortex lattice (Tkachenko modes in rotating condensates; the classic Labusch/Brandt
+  shear modulus c66 of superconductors near Hc2 is proportional to this number). Hessian of beta(tau), tau = x+iy:
+   triangular point: beta_xx = beta_yy = Om_t (4P - 27)/81 = 0.6353646888963445082326515605234147232904,
+                     beta_xy = 0, grad beta = 0;   P = pi^2 Om_t^4.
+   Under simple shear by strain eps, tau -> tau + eps Im(tau), so
+        d^2 beta / d eps^2 = (3/4) beta_xx = Om_t (4 pi^2 Om_t^4 - 27)/108 = 0.4765235166722583811744886704
+   (a quarter of this, 0.119131, matches the value ~0.1191 quoted from memory for the LLL Tkachenko elastic
+   constant C2/(g n^2); not verified against the paper, which could not be opened).
+   square point:     beta_xx = -Om_s/4 (NEGATIVE: the square lattice is unstable to shear),
+                     beta_yy = Om_s (P_s - 4)/16 = 1.11815670033415022754747115602977..., P_s = pi^2 Om_s^4.
+  Found by PSLQ on 50-digit numerical second derivatives ([-81,-27,0,4,0], [4,1,0,0,0], [16,4,0,-1,0]); checked
+  independently by real-space averages of sheared lattices (finite differences, h = 1e-6): 0.47652351667109
+  vs closed form 0.47652351667226. Code: code/abrikosov/shear.py.
 
 DERIVATION (sketch)
   Theta(t) = sum e^{-t x} = theta_3(e^{-pi t})^2 (square) is a weight-1 modular form in disguise; its t-
