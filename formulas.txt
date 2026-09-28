@@ -74,6 +74,17 @@ THE FORMULA
       of (a). Independent finite differences (160^2 mesh) at (0.37,0.81): g_xx 0.08698816772405 (formula
       0.08698816772687), g_yy 0.05642969590245 (formula 0.05642969590400).
       Code: code/lieb_metric/gxx_fit3.py, gxx_formula.py.
+  (e) A SINGLE distorted bond (added later on 2026-09-28): intra-cell x-bond hopping a, the other three
+      hoppings 1 (s = 1/2). One modified bond already isolates the flat band (for a != 1). Then
+        M(a) = (a^2+3) / ( 2 pi (a+1) sqrt(a^2-2a+5) ) * [ K(k) - (a+1)^2/(a^2+2a+5) * E(k) ],
+        k^2 = 16 a / ( (a+1)^2 (a^2-2a+5) ).
+      a = 1 gives k = 1 and the (2K-E)/(4pi) form (gapless limit). Values: a = 3: 0.1066317423090678225451329271 (k^2 = 3/8);
+      a = 1.37: 0.3582868489357676071833259; a = 0.25: 0.2809556618821731184701665.
+      Found by PSLQ (60 digits, basis {K/pre, E/pre}) at 9 values of a and exact rational interpolation;
+      checked at a = 1.37, e (2.718281828), 0.6, 0.25 against 50-digit quadrature (diffs < 2e-51) and by
+      finite differences at a = 1.37 (0.35828684885445 vs 0.35828684893577; near-gapless, slower mesh
+      convergence). The fully general four-hopping case is K and E only as well (NOTES.md), not yet fitted.
+      Code: code/lieb_metric/lieb4.py, lieb4_family.py, lieb4_family_formula.py.
   (c) Minimal quantum metric (minimum over all orbital positions; isotropic delta).
       M depends on where the orbitals are placed; it is exactly quadratic in the B-C relative
       position, and by the x<->y symmetry the minimum lies on the family s above. Result:
