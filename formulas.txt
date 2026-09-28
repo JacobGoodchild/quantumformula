@@ -4,6 +4,7 @@ INDEX OF RESULTS (see each entry for derivation, verification and novelty notes)
  2  Qi-Wu-Zhang Chern insulator: exact integrated quantum metric, all m (K and Pi) ...... not found
  3  Gapped graphene (hBN-type): exact integrated quantum metric; = 1/48 at Delta = 3t ... not found
  4  Simplex bipartite lattices: general reduction, magic mass; gapped DIAMOND closed form  not found
+ 5  3D Lieb (perovskite) flat bands: metric via SC Green fn; = Watson/4 at delta = 0 ... not found
 ------------------------------------------------------------------------------------------
 "Not found" = my web searches found no prior statement; arXiv/journal pages were not
 directly accessible from this environment, so experts should confirm novelty.
@@ -362,3 +363,77 @@ NOVELTY
 
 Code: code/diamond_metric/diamond.py (Joyce form + check), diamond_explicit.py (closed form, limits),
       hp_direct.py (32-digit direct 3D quadrature; logs hp_direct_*.log), check_fd_diamond.py.
+
+==========================================================================================
+FORMULA 5 - Flat bands of the 3D Lieb (perovskite / edge-centred cubic) lattice: exact quantum
+            metric via the simple-cubic Green function; at zero staggering it is exactly
+            Watson's integral / 4
+Found: 2026-09-28.  Status: DERIVED analytically (divergence-theorem reduction as in Formulas 3-4),
+checked against an independent 4x4-Hamiltonian finite-difference code (1e-11 at delta = 0.5;
+6e-8 at delta = 0.2 on a coarse mesh; delta = 0 extrapolates to Watson/4 within ~1e-4) and by the
+delta -> 0 limit (converges linearly onto W/4, slope -sqrt3/pi).  Novelty: NOT FOUND.
+==========================================================================================
+
+THE QUESTION (plain English)
+  The 3D cousin of the Lieb lattice puts an atom at every corner of a cubic grid and one in the
+  middle of every edge (the oxygen-copper network of perovskites is of this type). It has TWO
+  perfectly flat bands. With alternating strong/weak bonds (1+delta, 1-delta) they are isolated
+  from the rest. How large is their quantum metric (the quantity that sets flat-band
+  superfluid stiffness and Wannier spreads)? And what happens when delta -> 0 and the flat bands
+  touch the other bands - in 2D the answer blows up (Formula 1), in 3D?
+
+MODEL / SET-UP
+  Corner site A at (0,0,0), edge sites at (1/2,0,0), (0,1/2,0), (0,0,1/2); hopping 1+delta inside
+  the cell, 1-delta between cells.  H(k) = [[0, f1, f2, f3], [f1*,0,0,0], [f2*,0,0,0], [f3*,0,0,0]],
+  f_i = (1+delta) e^{i k_i/2} + (1-delta) e^{-i k_i/2}.  E = 0 is a doubly degenerate flat band.
+  M(delta) = BZ average of Tr g of the 2-dim flat-band projector (non-Abelian metric, summed over
+  x, y, z; lattice constant 1).
+  G(w) = <1/(w - cos k1 - cos k2 - cos k3)> = simple-cubic lattice Green function (w >= 3);
+  Watson's integral W = 3 G(3) = (sqrt6/(32 pi^3)) Gamma(1/24)Gamma(5/24)Gamma(7/24)Gamma(11/24)
+                       = 1.516386059151978018156012...
+
+THE FORMULA
+     M(delta) = (w/4) G(w) + ((w^2 - 9)/12) G'(w),      w = 3 (1 + delta^2)/(1 - delta^2).
+
+  (G'(w) = dG/dw < 0.)  Values (30 digits, stable between 40 and 60 digits to 6e-42):
+     delta = 0.5: M = 0.2015225399162324063211328...
+     delta = 0.2: M = 0.284738118268315223493763710923
+     delta = 0.1: M = 0.3279130727215118726645707...
+  delta -> 0 (flat bands touching the dispersive bands at the R point):
+     M(0) = (3/4) G(3) = W/4 = (sqrt6/(128 pi^3)) Gamma(1/24)Gamma(5/24)Gamma(7/24)Gamma(11/24)
+          = 0.37909651478799450453900303992,
+  FINITE, unlike the 2D Lieb lattice (log divergence, Formula 1). Numerically
+     M(delta) = W/4 - (sqrt3/pi) delta + O(delta^2)
+  ((W/4 - M)/delta = 0.547396, 0.550936, 0.551290, 0.551325 at delta = 1e-2..1e-5 -> sqrt3/pi = 0.551329).
+
+DERIVATION (sketch)
+  The flat subspace is the orthogonal complement (within the three edge orbitals) of n = f/|f|, so
+  its metric equals that of the single vector n: Tr g = sum_i |f_i'|^2 (S - a_i)/S^2 with
+  a_i = |f_i|^2 = 2p + 2q cos k_i, |f_i'|^2 = p - a_i/4, S = sum a_i, p = 1+delta^2, q = 1-delta^2.
+  So Tr g = 2p/S - 1/4 + sum a_i^2/(4 S^2), and sum a_i^2 contains sum cos^2 k_i = 3 - |grad u|^2,
+  u = sum cos k_i. Since Laplacian(u) = -u, the divergence theorem turns <|grad u|^2/S^2> into
+  -<u/S>/(2q). Everything reduces to <1/(w+u)> and <1/(w+u)^2>; the constants cancel exactly and
+  p^2 - q^2 = 4 delta^2 = q^2 (w^2-9)/9, giving the formula. As w -> 3, G'(w) ~ -c/sqrt(w-3), so the
+  second term vanishes like sqrt(w-3) ~ delta, leaving W/4.
+  (G itself has a known closed form in complete elliptic integrals due to Joyce; here G is computed
+   as a 1D integral of the square-lattice Green function (2/(pi z)) K(4/z^2).)
+
+VERIFICATION
+  1. Independent code (check_fd_lieb3d.py: numerical 4x4 diagonalisation, rank-2 flat projector,
+     Tr g = (1/2) sum_i Tr(dP_i dP_i) by finite differences, midpoint mesh N^3):
+       delta = 0.5: N=16: 0.20152253990917, N=24: 0.20152253991048  (formula 0.20152253991623)
+       delta = 0.2: N=20: 0.28473805310941                             (formula 0.28473811826832)
+       delta = 0:   N=16: 0.36156695, N=24: 0.36746458, N=32: 0.37038673 (error ~ 0.279/N);
+                    1/N-extrapolation: 0.37926 (16,24), 0.37916 (24,32) -> W/4 = 0.3790965.
+  2. delta -> 0 limit of the formula converges to W/4 (see above; difference 5.5e-6 at delta = 1e-5).
+  3. Precision stability: M(0.5) at 40 vs 60 digits differs by 6e-42.
+
+NOVELTY
+  Searched: three-dimensional Lieb lattice / perovskite / edge-centred cubic flat band quantum metric
+  superfluid weight. Found: 3D (layered and perovskite) extensions of staggered Lieb lattices are
+  studied numerically in "Flat-band ratio and quantum metric in the superconductivity of modified
+  Lieb lattices" (Commun. Phys. 2025, arXiv:2404.12993). No closed form, and no statement that the
+  zero-staggering metric equals Watson's integral / 4, was seen. Status: not found in literature searched.
+
+Code: code/lieb3d_metric/lieb3d.py (formula, Watson constant, limits), check_fd_lieb3d.py
+      (independent check; logs fd_delta0.log, fd_delta02.log).
